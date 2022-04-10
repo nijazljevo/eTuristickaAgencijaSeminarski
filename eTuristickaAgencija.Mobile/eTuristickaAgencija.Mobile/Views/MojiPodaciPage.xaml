@@ -1,0 +1,66 @@
+﻿<!--<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ViewModels="clr-namespace:eTuristickaAgencija.Mobile.ViewModels"
+             mc:Ignorable="d"
+             x:Class="eTuristickaAgencija.Mobile.Views.MojiPodaciPage"
+             BackgroundImageSource="Assets/apppozadina.jpg">
+    <ContentPage.BindingContext>
+        <ViewModels:MojiPodaciViewModel></ViewModels:MojiPodaciViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+           
+            <Label FontSize="Medium" TextColor="WhiteSmoke" Text="Moje aktivne karte"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="StartAndExpand" />
+            <Button VerticalOptions="End" HorizontalOptions="End" Text="Kliknite ovdje za pregled historije karata" TextColor="WhiteSmoke" Clicked="Button_Clicked_1"></Button>
+            <ListView ItemSelected="ListView_ItemSelected" ItemsSource="{Binding KarteList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid BackgroundColor="WhiteSmoke" x:Name="TerminiLista"  Margin="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/
+
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Naziv" Grid.Row="0" Grid.Column="0"></Label>
+                                <Label  Text="Polazak" Grid.Row="0" Grid.Column="1"></Label>
+                                <Label  Text="Povratak" Grid.Row="0" Grid.Column="2"></Label>
+                                <!--<Label  Text="Hotel" Grid.Row="0" Grid.Column="3"></Label>
+                                <Label  Text="Broj zvjezdica" Grid.Row="0" Grid.Column="4"></Label>
+                                <Label  Text="Cijena" Grid.Row="0" Grid.Column="3"></Label>
+                                <Label  Text="Akcija" Grid.Row="0" Grid.Column="4"></Label>
+
+
+                                <Label Text="{Binding NazivPutovanja}" Grid.Row="1" Grid.Column="0"></Label>
+                                <Label Text="{Binding DatumPolaska,StringFormat='{}{0:dd/MM/yyyy}'}" Grid.Row="1" Grid.Column="1"></Label>
+                                <Label Text="{Binding DatumDolaska,StringFormat='{}{0:dd/MM/yyyy}'}" Grid.Row="1"  Grid.Column="2"></Label>
+                                <Label Text="{Binding NazivHotela}" Grid.Row="1" Grid.Column="3"></Label>
+                                <Label Text="{Binding BrojZvjezdica}" Grid.Row="1"  Grid.Column="4"></Label>
+                                <Label Text="{Binding Cijena,StringFormat='{0:F2} KM'}" Grid.Row="1"  Grid.Column="3"></Label>
+                                <Button Text="Ponisti" BackgroundColor="LightBlue" TextColor="White" Grid.Row="1" Grid.Column="4" Clicked="Button_Clicked_2"></Button>
+
+                            </Grid>
+                        </ViewCell>
+
+                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+
+            </ListView>
+           
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>-->

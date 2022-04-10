@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ViewModels="clr-namespace:eTuristickaAgencija.Mobile.ViewModels" xmlns:Converters="clr-namespace:eTuristickaAgencija.Mobile.Converters"
+             mc:Ignorable="d"
+             x:Class="eTuristickaAgencija.Mobile.Views.TerminDetaljiPage"
+             BackgroundImageSource="Assets/apppozadina.jpg">
+   
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Converters:ImageConverter x:Key="ImgConverter"></Converters:ImageConverter>
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+
+
+    <ContentPage.Content>
+        <ListView ItemsSource="{Binding OdabraniHotel}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="5">
+
+                            <Image HeightRequest="400"  Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Source="{Binding Slika,Converter={StaticResource ImgConverter}}"></Image>
+
+
+
+                            <Label TextColor="White"  VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding Naziv}" FontAttributes="Italic"></Label>
+                            <Label TextColor="White" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Text="Broj zvjezdica"></Label>
+                            <Label TextColor="White" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding BrojZvjezdica}" FontAttributes="Italic"></Label>
+                            
+
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        <!--<ListView ItemsSource="{Binding OdabraniTermin}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout BackgroundColor="WhiteSmoke" Padding="5">
+
+                            <Image HeightRequest="200"  Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Source="{Binding Slika,Converter={StaticResource ImgConverter}}"></Image>
+
+
+
+                            <Label VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding HotelNaziv}" FontAttributes="Italic"></Label>
+                                <Label FontAttributes="Bold" Text="Broj zvjezdica"></Label>
+                                <Label Text="{Binding BrojZvjezdica}" FontAttributes="Italic"></Label>
+                                <Label FontAttributes="Bold" Text="Datum polaska"></Label>
+                                <Label Text="{Binding DatumPolaska,StringFormat='{}{0:dd/MM/yyyy}'}" FontAttributes="Italic"></Label>
+                                <Label FontAttributes="Bold"  Text="Datum dolaska"></Label>
+                                <Label Text="{Binding DatumDolaska,StringFormat='{}{0:dd/MM/yyyy}'}" FontAttributes="Italic"></Label>
+                                <Label FontAttributes="Bold" Text="Cijena"></Label>
+                                <Label Text="{Binding Cijena,StringFormat='{0:F2} KM'}" FontAttributes="Italic"></Label>
+
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView>-->
+
+        
+
+
+    </ContentPage.Content>
+</ContentPage>

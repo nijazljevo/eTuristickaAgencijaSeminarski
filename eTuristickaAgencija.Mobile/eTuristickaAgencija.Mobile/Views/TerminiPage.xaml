@@ -1,0 +1,82 @@
+﻿<!--<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ViewModels="clr-namespace:eTuristickaAgencija.Mobile.ViewModels" xmlns:Converters="clr-namespace:eTuristickaAgencija.Mobile.Converters"
+             mc:Ignorable="d"
+             x:Class="eTuristickaAgencija.Mobile.Views.TerminiPage"
+             BackgroundImageSource="Assets/apppozadina.jpg">
+    <ContentPage.BindingContext>
+        
+        <ViewModels:TerminiViewModel></ViewModels:TerminiViewModel>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Converters:ImageConverter x:Key="ImgConverter"></Converters:ImageConverter>
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+
+
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout>
+                <ListView ItemsSource="{Binding OdabranaDestinacija}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="5">
+                                
+                                <Image HeightRequest="200"  Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Source="{Binding Slika,Converter={StaticResource ImgConverter}}"></Image>
+                                    <Label Text="{Binding Naziv}" TextColor="White" FontSize="Medium" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
+
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </StackLayout>
+
+            <Button VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" TextColor="White" Text="Pregled komentara" Clicked="Button_Clicked_1" ></Button>
+
+            <ListView ItemSelected="ListView_ItemSelected" ItemsSource="{Binding TerminiList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid x:Name="TerminiLista"  Margin="4" BackgroundColor="WhiteSmoke">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Label  Text="Datum Polaska" Grid.Row="0" Grid.Column="0"></Label>
+                                <Label  Text="Datum Dolaska" Grid.Row="0" Grid.Column="1"></Label>
+                                <Label  Text="Cijena" Grid.Row="0" Grid.Column="2"></Label>
+                                <Label Text="Akcija" Grid.Row="0" Grid.Column="3" ></Label>
+
+                                <Label Text="{Binding DatumPolaska,StringFormat='{}{0:dd/MM/yyyy}'}" Grid.Row="1" Grid.Column="0"></Label>
+                                <Label Text="{Binding DatumDolaska,StringFormat='{}{0:dd/MM/yyyy}'}" Grid.Row="1"  Grid.Column="1"></Label>
+                                <Label Text="{Binding Cijena,StringFormat='{0:F2} KM'}" Grid.Row="1"  Grid.Column="2"></Label>
+                                <Button Text="Kupi" Clicked="Button_Clicked_2" BackgroundColor="LightBlue" Grid.Row="1" Grid.Column="3"></Button>
+                                <Button Text="Hotel" Clicked="Button_Clicked_3" BackgroundColor="LightSkyBlue" Grid.Row="1" Grid.Column="4"></Button>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+            <Button BackgroundColor="LightBlue" Clicked="Button_Clicked" Text="Kupi"></Button>
+           
+        </StackLayout>
+       
+
+    </ContentPage.Content>
+</ContentPage>-->

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ViewModels="clr-namespace:eTuristickaAgencija.Mobile.ViewModels" xmlns:Converters="clr-namespace:eTuristickaAgencija.Mobile.Converters"
+             mc:Ignorable="d"
+             x:Class="eTuristickaAgencija.Mobile.Views.DestinacijePage"
+             BackgroundImageSource="Assets/apppozadina.jpg">
+
+    <ContentPage.BindingContext>
+        <ViewModels:DestinacijeViewModel></ViewModels:DestinacijeViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Converters:ImageConverter x:Key="ImgConverter"></Converters:ImageConverter>
+        </ResourceDictionary>
+        
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        
+        <StackLayout>
+            <Label FontSize="Medium" FontFamily="Verdana" FontAttributes="Bold" TextColor="WhiteSmoke" Text="Odaberite drzavu i grad:"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="StartAndExpand" />
+            <Picker BackgroundColor="LightSteelBlue" SelectedIndexChanged="Picker_SelectedIndexChanged" ItemsSource="{Binding DrzaveList}" SelectedItem="{Binding SelectedDrzava}" ItemDisplayBinding="{Binding Naziv}"></Picker>
+            <Picker  BackgroundColor="LightSteelBlue" ItemsSource="{Binding GradoviList}" SelectedItem="{Binding SelectedGrad}" ItemDisplayBinding="{Binding Naziv}"></Picker>
+            <ListView ItemSelected="ListView_ItemSelected"  ItemsSource="{Binding DestinacijeList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="5">
+                                <Label FontSize="Small" TextColor="WhiteSmoke" FontAttributes="Italic" FontFamily="Verdana" Text="{Binding Naziv}"></Label>
+                                <Image HeightRequest="400"  Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Source="{Binding Slika,Converter={StaticResource ImgConverter}}"></Image>
+                                
+
+                                
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

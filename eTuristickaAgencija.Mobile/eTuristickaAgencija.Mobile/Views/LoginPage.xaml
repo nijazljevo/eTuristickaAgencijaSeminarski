@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ViewModels="clr-namespace:eTuristickaAgencija.Mobile.ViewModels"
+             mc:Ignorable="d"
+             x:Class="eTuristickaAgencija.Mobile.Views.LoginPage"
+             >
+    <ContentPage.BindingContext>
+        <ViewModels:LoginViewModel></ViewModels:LoginViewModel>
+        
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        
+        <Grid>
+            
+            <Image  Source="Assets/pozadina2.jpg" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFill"></Image>
+        
+            <StackLayout Margin="20" BackgroundColor="WhiteSmoke" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+            <Label Text="Korisnicko ime"></Label>
+            <Entry Text="{Binding Username}"></Entry>
+            <Label Text="Password"></Label>
+            <Entry IsPassword="True" Text="{Binding Password}"></Entry>
+            <!--<Button Command="{Binding LoginCommand}" BackgroundColor="Blue"  Text="Login"></Button>-->
+                <Button Clicked="Button_Clicked_1" BackgroundColor="LightBlue" TextColor="WhiteSmoke" FontAttributes="Italic" Text="Login"></Button>
+                <Label></Label>
+            <Button Clicked="Button_Clicked" BackgroundColor="Red" TextColor="WhiteSmoke" FontAttributes="Italic" Text="Registracija" ></Button>
+            <Label IsVisible="{Binding IsBusy}" HorizontalOptions="FillAndExpand" Text="Provjera...">
+                </Label>
+               
+        </StackLayout>
+        </Grid>
+
+
+    </ContentPage.Content>
+</ContentPage>

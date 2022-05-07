@@ -1,33 +1,33 @@
 version: '3'
 services:
 #mssql docker
-  etourist-sql:
+  eturistickaagencija-sql:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     restart: unless-stopped
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=QWElkj132!
+      - SA_PASSWORD=ASas.,12
       - MSSQL_PID=Developer
     ports:
-      - 1401:1433
+      - 1403:1433
     networks:
-      - etouristnet
+      - eturistickaagencijanet
 
-  etourist-api:
+  eturistickaagencija-api:
     restart: unless-stopped
     build:
       context: .
     environment:
-      - ConnectionStrings:eTourist=Server=etourist-sql,1433;Database=eTourist1TMP;User=sa;Password=QWElkj132!;ConnectRetryCount=0
+      - ConnectionStrings:DefaultConnection=Server=eturistickaagencija-sql,1433;Database=TuristickaAgencija;User=sa;Password=ASas.,12;ConnectRetryCount=0
     ports:
-      - 5000:5050
+      - 5011:5011
     networks:
-      - etouristnet
+      - eturistickaagencijanet
     links:
-      - etourist-sql
+      - eturistickaagencija-sql
     depends_on:
-      - etourist-sql
+      - eturistickaagencija-sql
       
 networks:
-  etouristnet:
+  eturistickaagencijanet:
     driver: bridge      

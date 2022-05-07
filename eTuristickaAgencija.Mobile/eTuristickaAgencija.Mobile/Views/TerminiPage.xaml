@@ -1,4 +1,4 @@
-﻿<!--<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -7,7 +7,7 @@
              x:Class="eTuristickaAgencija.Mobile.Views.TerminiPage"
              BackgroundImageSource="Assets/apppozadina.jpg">
     <ContentPage.BindingContext>
-        
+
         <ViewModels:TerminiViewModel></ViewModels:TerminiViewModel>
     </ContentPage.BindingContext>
 
@@ -23,21 +23,21 @@
         <StackLayout>
             <StackLayout>
                 <ListView ItemsSource="{Binding OdabranaDestinacija}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Padding="5">
-                                
-                                <Image HeightRequest="200"  Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Source="{Binding Slika,Converter={StaticResource ImgConverter}}"></Image>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="5">
+
+                                    <Image HeightRequest="200"  Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Source="{Binding Slika,Converter={StaticResource ImgConverter}}"></Image>
                                     <Label Text="{Binding Naziv}" TextColor="White" FontSize="Medium" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
 
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
 
-            </ListView>
-        </StackLayout>
+                </ListView>
+            </StackLayout>
 
             <Button VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" TextColor="White" Text="Pregled komentara" Clicked="Button_Clicked_1" ></Button>
 
@@ -74,9 +74,9 @@
 
             </ListView>
             <Button BackgroundColor="LightBlue" Clicked="Button_Clicked" Text="Kupi"></Button>
-           
+
         </StackLayout>
-       
+
 
     </ContentPage.Content>
-</ContentPage>-->
+</ContentPage>

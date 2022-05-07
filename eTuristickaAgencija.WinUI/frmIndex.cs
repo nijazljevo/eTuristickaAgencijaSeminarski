@@ -1,4 +1,5 @@
-﻿using eTuristickaAgencija.WinUI.Destinacije;
+﻿using eTuristickaAgencija.WinUI.Agencija;
+using eTuristickaAgencija.WinUI.Destinacije;
 using eTuristickaAgencija.WinUI.Drzave;
 using eTuristickaAgencija.WinUI.Gradovi;
 using eTuristickaAgencija.WinUI.Hoteli;
@@ -263,6 +264,12 @@ namespace eTuristickaAgencija.WinUI
         private void novaRezervacijaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmRezervacijeDetalji frm = new frmRezervacijeDetalji();
+            frm.Show();
+        }
+
+        private void pretragaAgencijaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAgencija frm = new frmAgencija();
             frm.Show();
         }
     }

@@ -493,6 +493,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agencija\frmAgencija.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agencija\frmAgencija.Designer.cs">
+      <DependentUpon>frmAgencija.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Agencija\frmAgencijaDetalji.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agencija\frmAgencijaDetalji.Designer.cs">
+      <DependentUpon>frmAgencijaDetalji.cs</DependentUpon>
+    </Compile>
     <Compile Include="APIService.cs" />
     <Compile Include="Destinacije\frmDestinacije.cs">
       <SubType>Form</SubType>
@@ -628,6 +640,12 @@
     <Compile Include="Uposlenici\frmUposleniciDetalji.Designer.cs">
       <DependentUpon>frmUposleniciDetalji.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Agencija\frmAgencija.resx">
+      <DependentUpon>frmAgencija.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Agencija\frmAgencijaDetalji.resx">
+      <DependentUpon>frmAgencijaDetalji.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Destinacije\frmDestinacije.resx">
       <DependentUpon>frmDestinacije.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,4 +1,4 @@
-﻿/*using eProdaja.Mobile;
+﻿using eProdaja.Mobile;
 using eTuristickaAgencija.Models;
 using eTuristickaAgencija.Models.Request;
 using Flurl.Util;
@@ -83,7 +83,7 @@ namespace eTuristickaAgencija.Mobile.ViewModels
                 Ime = Ime,
                 KorisnikoIme=KorisnickoIme,
                 Prezime = Prezime,
-                UlogaId=int.Parse(1.ToString()),//putnik
+                UlogaId=int.Parse(28.ToString()),
                 Email=Email,
                 Password=Password,
                 PasswordPotvrda=PasswordPotvrda,
@@ -108,4 +108,3 @@ namespace eTuristickaAgencija.Mobile.ViewModels
 
     }
 }
-*/

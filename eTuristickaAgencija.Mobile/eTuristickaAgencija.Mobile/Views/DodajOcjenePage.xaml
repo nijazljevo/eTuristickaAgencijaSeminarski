@@ -21,13 +21,13 @@
 
         <StackLayout WidthRequest="300" HeightRequest="300" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
             <Label FontSize="Medium" Text="{Binding Obavijest}"></Label>
-            <Label TextColor="WhiteSmoke" FontSize="Medium" Text="Ocjena(1-5)"></Label>
+            <Label TextColor="Black" FontSize="Medium" Text="Ocjena(1-5)"></Label>
             <!--<Entry HorizontalOptions="Start" Text="{Binding Ocjena}"></Entry>-->
             <Picker ItemsSource="{Binding Ocjene}" SelectedItem="{Binding Ocjena}" SelectedIndexChanged="Picker_SelectedIndexChanged"></Picker>
             
-             <Label TextColor="WhiteSmoke" FontSize="Medium" Text="Komentar"></Label>
+             <Label TextColor="Black" FontSize="Medium" Text="Komentar"></Label>
             <Entry Text="{Binding Komentar}"></Entry>
-            <Button BackgroundColor="LightBlue" Clicked="Button_Clicked" Command="{Binding DKomentar }" TextColor="WhiteSmoke" Text="Dodaj"></Button>
+            <Button BackgroundColor="Blue" Clicked="Button_Clicked" Command="{Binding DKomentar }" TextColor="Black" Text="Dodaj"></Button>
 
         </StackLayout>
     </ContentPage.Content>

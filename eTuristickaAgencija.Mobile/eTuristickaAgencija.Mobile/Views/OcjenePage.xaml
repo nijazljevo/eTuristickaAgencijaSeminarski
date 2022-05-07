@@ -1,4 +1,4 @@
-﻿<!--<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -21,30 +21,30 @@
 
     <ContentPage.Content>
         <StackLayout>
-            <Button HorizontalOptions="End" Clicked="Button_Clicked" TextColor="WhiteSmoke" Text="Dodaj komentar"></Button>
+            <Button HorizontalOptions="End" Clicked="Button_Clicked" TextColor="Black" Text="Dodaj komentar"></Button>
             <ListView ItemsSource="{Binding ListaOcjena}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <Grid>
                                 <Grid.RowDefinitions>
-                                <RowDefinition Height="100" />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="100" />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                           
 
-                            <Image HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" HeightRequest="100" WidthRequest="100" Source="{Binding Slika,Converter={StaticResource ImgConverter}}"></Image>
-                             <Label Grid.Row="1" Grid.Column="0" TextColor="White" FontAttributes="Bold" FontSize="Medium" Text="{Binding KorisnickoIme}"></Label>
-                                <Label Grid.Row="2" Grid.Column="0" FontSize="Small" Text="Ocjena:" TextColor="White"></Label>
-                             <Label Grid.Row="3" Grid.Column="0" FontSize="Small" TextColor="White" Text="{Binding OcjenaUsluge}"></Label>
-                              <Label VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand" Grid.Row="0" Grid.Column="1" TextColor="White" FontSize="Small" Text="{Binding Komentar}"></Label>
-                                
+
+                                <Image HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" HeightRequest="100" WidthRequest="100" Source="{Binding Slika,Converter={StaticResource ImgConverter}}"></Image>
+                                <Label Grid.Row="1" Grid.Column="0" TextColor="Black" FontAttributes="Bold" FontSize="Medium" Text="{Binding KorisnickoIme}"></Label>
+                                <Label Grid.Row="2" Grid.Column="0" FontSize="Small" Text="Ocjena:" TextColor="Black"></Label>
+                                <Label Grid.Row="3" Grid.Column="0" FontSize="Small" TextColor="Black" Text="{Binding OcjenaUsluge}"></Label>
+                                <Label VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand" Grid.Row="0" Grid.Column="1" TextColor="Black" FontSize="Small" Text="{Binding Komentar}"></Label>
+
 
                             </Grid>
 
@@ -58,7 +58,7 @@
 
 
 
-            
+
         </StackLayout>
     </ContentPage.Content>
-</ContentPage>-->
+</ContentPage>

@@ -50,13 +50,14 @@
             this.dgvKontinenti.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Id,
             this.Naziv});
-            this.dgvKontinenti.Location = new System.Drawing.Point(1, 21);
+            this.dgvKontinenti.Location = new System.Drawing.Point(1, 17);
+            this.dgvKontinenti.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dgvKontinenti.Name = "dgvKontinenti";
             this.dgvKontinenti.ReadOnly = true;
             this.dgvKontinenti.RowHeadersWidth = 51;
             this.dgvKontinenti.RowTemplate.Height = 24;
             this.dgvKontinenti.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvKontinenti.Size = new System.Drawing.Size(797, 272);
+            this.dgvKontinenti.Size = new System.Drawing.Size(598, 221);
             this.dgvKontinenti.TabIndex = 0;
             this.dgvKontinenti.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKontinenti_CellContentClick);
             this.dgvKontinenti.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgvKontinenti_MouseDoubleClick);
@@ -83,25 +84,28 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 51);
+            this.label1.Location = new System.Drawing.Point(9, 41);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 17);
+            this.label1.Size = new System.Drawing.Size(34, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Naziv";
             // 
             // txtNaziv
             // 
-            this.txtNaziv.Location = new System.Drawing.Point(12, 83);
+            this.txtNaziv.Location = new System.Drawing.Point(9, 67);
+            this.txtNaziv.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtNaziv.Name = "txtNaziv";
-            this.txtNaziv.Size = new System.Drawing.Size(329, 22);
+            this.txtNaziv.Size = new System.Drawing.Size(248, 20);
             this.txtNaziv.TabIndex = 2;
             this.txtNaziv.Validating += new System.ComponentModel.CancelEventHandler(this.txtNaziv_Validating);
             // 
             // btnTrazi
             // 
-            this.btnTrazi.Location = new System.Drawing.Point(266, 126);
+            this.btnTrazi.Location = new System.Drawing.Point(200, 102);
+            this.btnTrazi.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnTrazi.Name = "btnTrazi";
-            this.btnTrazi.Size = new System.Drawing.Size(75, 23);
+            this.btnTrazi.Size = new System.Drawing.Size(56, 19);
             this.btnTrazi.TabIndex = 3;
             this.btnTrazi.Text = "Trazi";
             this.btnTrazi.UseVisualStyleBackColor = true;
@@ -110,9 +114,11 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgvKontinenti);
-            this.groupBox1.Location = new System.Drawing.Point(1, 158);
+            this.groupBox1.Location = new System.Drawing.Point(1, 128);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(798, 293);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(598, 238);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Kontinenti";
@@ -123,15 +129,17 @@
             // 
             // frmKontinenti
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(600, 366);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnTrazi);
             this.Controls.Add(this.txtNaziv);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmKontinenti";
             this.Text = "frmKontinenti";
+            this.Load += new System.EventHandler(this.frmKontinenti_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvKontinenti)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();

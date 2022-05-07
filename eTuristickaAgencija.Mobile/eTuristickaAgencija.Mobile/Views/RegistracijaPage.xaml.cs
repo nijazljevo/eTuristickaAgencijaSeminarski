@@ -1,4 +1,4 @@
-﻿/*using eTuristickaAgencija.Mobile.ViewModels;
+﻿using eTuristickaAgencija.Mobile.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,4 +30,4 @@ namespace eTuristickaAgencija.Mobile.Views
 
         }
     }
-}*/
+}

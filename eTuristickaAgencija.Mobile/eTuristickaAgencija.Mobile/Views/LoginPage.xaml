@@ -14,18 +14,18 @@
         
         <Grid>
             
-            <Image  Source="Assets/pozadina2.jpg" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFill"></Image>
-        
-            <StackLayout Margin="20" BackgroundColor="WhiteSmoke" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
-            <Label Text="Korisnicko ime"></Label>
+            <!--<Image  Source="Assets/pozadina2.jpg" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFill"></Image>-->
+
+            <StackLayout Margin="20"  Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                <Label Text="Korisnicko ime"></Label>
             <Entry Text="{Binding Username}"></Entry>
             <Label Text="Password"></Label>
             <Entry IsPassword="True" Text="{Binding Password}"></Entry>
             <!--<Button Command="{Binding LoginCommand}" BackgroundColor="Blue"  Text="Login"></Button>-->
-                <Button Clicked="Button_Clicked_1" BackgroundColor="LightBlue" TextColor="WhiteSmoke" FontAttributes="Italic" Text="Login"></Button>
+                <Button Clicked="Button_Clicked_1" BackgroundColor="Blue" TextColor="WhiteSmoke" FontAttributes="Italic" Text="Login"></Button>
                 <Label></Label>
             <Button Clicked="Button_Clicked" BackgroundColor="Red" TextColor="WhiteSmoke" FontAttributes="Italic" Text="Registracija" ></Button>
-            <Label IsVisible="{Binding IsBusy}" HorizontalOptions="FillAndExpand" Text="Provjera...">
+            <Label IsVisible="{Binding IsBusy}" HorizontalOptions="FillAndExpand" Text="Prijava...">
                 </Label>
                
         </StackLayout>

@@ -1,4 +1,4 @@
-﻿/*using eProdaja.Mobile;
+﻿using eProdaja.Mobile;
 using eTuristickaAgencija.Mobile.Models;
 using eTuristickaAgencija.Mobile.Views;
 using eTuristickaAgencija.Models;
@@ -90,4 +90,3 @@ namespace eTuristickaAgencija.Mobile.ViewModels
         
     }
 }
-*/

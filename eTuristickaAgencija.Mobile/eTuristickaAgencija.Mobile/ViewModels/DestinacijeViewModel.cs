@@ -1,4 +1,4 @@
-﻿/*using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -107,8 +107,7 @@ namespace eTuristickaAgencija.Mobile.ViewModels
 
             if (SelectedDrzava != null)
             {
-                //if (GradoviList.Count == 0)
-                //{
+                
                 
 
                 GradoviSearchRequest request = new GradoviSearchRequest()
@@ -117,7 +116,6 @@ namespace eTuristickaAgencija.Mobile.ViewModels
                     DrzavaId = SelectedDrzava.Id
 
                 };
-                //var gradovilist = await _gradoviservice.Get<IEnumerable<Grad>>(request);
                 var gradovilist = new List<Grad>();
 
 
@@ -202,4 +200,3 @@ namespace eTuristickaAgencija.Mobile.ViewModels
     }
     
 }
-*/

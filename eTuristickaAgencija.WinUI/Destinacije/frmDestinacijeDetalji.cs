@@ -228,7 +228,7 @@ namespace eTuristickaAgencija.WinUI.Destinacije
 
         private void txtSlika_Validating(object sender, CancelEventArgs e)
         {
-            if (!_id.HasValue)
+         /*   if (!_id.HasValue)
             {
                 if (string.IsNullOrEmpty(txtSlika.Text) || string.IsNullOrWhiteSpace(txtSlika.Text))
                 {
@@ -242,7 +242,7 @@ namespace eTuristickaAgencija.WinUI.Destinacije
                     errorProvider1.SetError(txtSlika, null);
                 }
 
-            }
+            }*/
 
         }
 

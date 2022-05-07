@@ -87,13 +87,13 @@
     <AndroidResource Include="Resources\drawable\xamarin_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eTouristapp.Mobile\eTuristickaAgencija.Mobile.csproj">
-      <Project>{BE53EEEC-9B55-4DB4-BAC4-34B14060A255}</Project>
-      <Name>eTuristickaAgencija.Mobile</Name>
-    </ProjectReference>
+    <None Include="Resources\drawable\madrid.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\drawable\madrid.jpg" />
+    <ProjectReference Include="..\eTuristickaAgencija.Mobile\eTuristickaAgencija.Mobile.csproj">
+      <Project>{136ee9b1-5e35-45e2-a302-3ca23051720b}</Project>
+      <Name>eTuristickaAgencija.Mobile</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

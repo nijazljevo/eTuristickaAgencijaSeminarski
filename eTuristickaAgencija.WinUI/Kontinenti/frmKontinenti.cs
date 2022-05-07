@@ -60,5 +60,10 @@ namespace eTuristickaAgencija.WinUI.Kontinenti
                 errorProvider1.SetError(txtNaziv, null);
             }
         }
+
+        private void frmKontinenti_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

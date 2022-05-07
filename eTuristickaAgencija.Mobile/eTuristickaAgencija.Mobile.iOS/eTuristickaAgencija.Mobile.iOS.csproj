@@ -138,11 +138,11 @@
     <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\eTouristapp.Mobile\eTuristickaAgencija.Mobile.csproj">
-      <Project>{BE53EEEC-9B55-4DB4-BAC4-34B14060A255}</Project>
+    <ProjectReference Include="..\eTuristickaAgencija.Mobile\eTuristickaAgencija.Mobile.csproj">
+      <Project>{136ee9b1-5e35-45e2-a302-3ca23051720b}</Project>
       <Name>eTuristickaAgencija.Mobile</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

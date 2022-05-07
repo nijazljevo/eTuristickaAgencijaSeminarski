@@ -5,27 +5,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ViewModels="clr-namespace:eTuristickaAgencija.Mobile.ViewModels"
              mc:Ignorable="d"
              x:Class="eTuristickaAgencija.Mobile.Views.RegistracijaPage">
-   
+    <ContentPage.BindingContext>
+        <ViewModels:RegistracijaViewModel></ViewModels:RegistracijaViewModel>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid>
             <Image Source="Assets/pozadina.jpg" Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"></Image> 
             <StackLayout BackgroundColor="Transparent" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
-            <Label TextColor="WhiteSmoke" Text="Unesite vase podatke:"
+            <Label TextColor="Black" Text="Unesite vase podatke:"
                 VerticalOptions="StartAndExpand" 
                 HorizontalOptions="StartAndExpand" />
 
-            
-                <Label Margin="5" TextColor="WhiteSmoke" Text="Ime"></Label>
+
+                <Label Margin="5" TextColor="Black" Text="Ime"></Label>
                 <Entry FontSize="12" VerticalOptions="Start" HeightRequest="28" Margin="5" Text="{Binding Ime}"></Entry>
-                <Label Margin="5" TextColor="WhiteSmoke" Text="Prezime"></Label>
+                <Label Margin="5" TextColor="Black" Text="Prezime"></Label>
                 <Entry FontSize="12" VerticalOptions="Start" HeightRequest="28" Margin="5"  Text="{Binding Prezime}"></Entry>
-                <Label  Margin="5" TextColor="WhiteSmoke" Text="Korisnicko ime"></Label>
+                <Label  Margin="5" TextColor="Black" Text="Korisnicko ime"></Label>
                 <Entry FontSize="12" VerticalOptions="Start" HeightRequest="28" Margin="5" Text="{Binding KorisnickoIme}"></Entry>
-                <Label  Margin="5" TextColor="WhiteSmoke" Text="Email(example: examemail@exm.exa)"></Label>
+                <Label  Margin="5" TextColor="Black" Text="Email(example: examemail@exm.exa)"></Label>
                 <Entry FontSize="12" VerticalOptions="Start" HeightRequest="28" Margin="5" Text="{Binding Email}"></Entry>
-                <Label  Margin="5" TextColor="WhiteSmoke" Text="Password"></Label>
+                <Label  Margin="5" TextColor="Black" Text="Password"></Label>
                 <Entry FontSize="12" VerticalOptions="Start" HeightRequest="28" Margin="5" Text="{Binding Password}"></Entry>
-                <Label  Margin="5" TextColor="WhiteSmoke" Text="Password potvrda"></Label>
+                <Label  Margin="5" TextColor="Black" Text="Password potvrda"></Label>
                 <Entry FontSize="12" VerticalOptions="Start" HeightRequest="28" Margin="5" Text="{Binding PasswordPotvrda}"></Entry>
 
                 <Button FontSize="12" VerticalOptions="Start" HeightRequest="28" Margin="5" BackgroundColor="LightBlue" Clicked="Button_Clicked"  Text="Registracija"></Button>

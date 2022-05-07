@@ -55,6 +55,8 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.agencijaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pretragaAgencijaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +70,8 @@
             this.hoteliToolStripMenuItem,
             this.podrucjaToolStripMenuItem,
             this.uposleniciToolStripMenuItem,
-            this.rezervacijeToolStripMenuItem});
+            this.rezervacijeToolStripMenuItem,
+            this.agencijaToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -263,6 +266,21 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
+            // agencijaToolStripMenuItem
+            // 
+            this.agencijaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pretragaAgencijaToolStripMenuItem});
+            this.agencijaToolStripMenuItem.Name = "agencijaToolStripMenuItem";
+            this.agencijaToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.agencijaToolStripMenuItem.Text = "Agencija";
+            // 
+            // pretragaAgencijaToolStripMenuItem
+            // 
+            this.pretragaAgencijaToolStripMenuItem.Name = "pretragaAgencijaToolStripMenuItem";
+            this.pretragaAgencijaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pretragaAgencijaToolStripMenuItem.Text = "Pretraga agencija";
+            this.pretragaAgencijaToolStripMenuItem.Click += new System.EventHandler(this.pretragaAgencijaToolStripMenuItem_Click);
+            // 
             // frmIndex
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -314,6 +332,8 @@
         private System.Windows.Forms.ToolStripMenuItem rezervacijeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pretragaRezervacijaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem novaRezervacijaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem agencijaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pretragaAgencijaToolStripMenuItem;
     }
 }
 

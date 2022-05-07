@@ -1,4 +1,4 @@
-﻿/*using eTuristickaAgencija.Mobile.Views;
+﻿using eTuristickaAgencija.Mobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,8 +18,8 @@ namespace eTuristickaAgencija.Mobile.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private readonly APIService _service = new APIService("Korisnici");//ili destinacije
-        private readonly APIService _rsII = new APIService("RSII25092020");
+        private readonly APIService _service = new APIService("Korisnici");
+      
 
         public LoginViewModel()
         {
@@ -67,7 +67,7 @@ namespace eTuristickaAgencija.Mobile.ViewModels
 
                 //await _service.Get<dynamic>(null);
                 //Application.Current.MainPage = new MainPage();
-                if (korisnik != null && korisnik.UlogaId == 1)
+                if (korisnik != null && korisnik.UlogaId == 28)
                 {
                     
 
@@ -100,4 +100,3 @@ namespace eTuristickaAgencija.Mobile.ViewModels
     }
 
 }
-*/

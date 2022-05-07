@@ -1,4 +1,4 @@
-﻿/*using eProdaja.Mobile;
+﻿using eProdaja.Mobile;
 using eTuristickaAgencija.Mobile.Models;
 using eTuristickaAgencija.Mobile.ViewModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -41,4 +41,4 @@ namespace eTuristickaAgencija.Mobile.Views
             await model.Pretraga();
         }
     }
-}*/
+}

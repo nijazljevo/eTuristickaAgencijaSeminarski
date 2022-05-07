@@ -79,7 +79,7 @@ namespace eTuristickaAgencija.API
             services.AddScoped<ICRUDService<Models.Kontinent, KontinentSearchRequest, KontinentInsertRequest, KontinentInsertRequest>, KontinentiService>();
             services.AddScoped<ICRUDService<Models.Uposlenik, UposlenikSearchRequest, UposlenikInsertRequest, UposlenikInsertRequest>, UposlenikService>();
             services.AddScoped<ICRUDService<Models.Rezervacija, RezervacijaSearchRequest, RezervacijaInsertRequest, RezervacijaInsertRequest>, RezervacijaService>();
-
+            services.AddScoped<ICRUDService<Models.Agencija, AgencijaSearchRequest, AgencijaInsertRequest, AgencijaInsertRequest>, AgencijaService>();
 
 
             services.AddAuthentication("BasicAuthentication")
@@ -99,7 +99,7 @@ namespace eTuristickaAgencija.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseAuthentication();

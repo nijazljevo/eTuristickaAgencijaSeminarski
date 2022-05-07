@@ -1,4 +1,4 @@
-﻿/*using eProdaja.Mobile;
+﻿using eProdaja.Mobile;
 using eTuristickaAgencija.Mobile.ViewModels;
 using eTuristickaAgencija.Models.Request;
 using System;
@@ -38,4 +38,4 @@ namespace eTuristickaAgencija.Mobile.Views
             App.Current.MainPage=new KorisnikDetaljiPage();
         }
     }
-}*/
+}

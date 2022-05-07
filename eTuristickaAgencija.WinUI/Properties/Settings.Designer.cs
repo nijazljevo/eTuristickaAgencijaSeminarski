@@ -34,7 +34,7 @@ namespace eTuristickaAgencija.WinUI.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:5011/api")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:5011/api")]
         public string APIUrl2 {
             get {
                 return ((string)(this["APIUrl2"]));

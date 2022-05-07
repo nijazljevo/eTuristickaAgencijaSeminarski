@@ -1,4 +1,4 @@
-﻿<!--<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -17,9 +17,9 @@
 
     </ContentPage.Resources>
     <ContentPage.Content>
-        
+
         <StackLayout>
-            <Label Text="Za vas preporucujemo:" TextColor="WhiteSmoke" FontSize="Medium" FontFamily="Verdana" FontAttributes="Bold"
+            <Label Text="Za vas preporucujemo:" TextColor="Black" FontSize="Medium" FontFamily="Verdana" FontAttributes="Bold"
                 VerticalOptions="StartAndExpand" 
                 HorizontalOptions="StartAndExpand" />
 
@@ -28,11 +28,11 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout>
-                                <Label FontSize="Small" TextColor="WhiteSmoke" FontFamily="Verdana" FontAttributes="Italic"  Text="{Binding Naziv}"></Label>
+                                <Label FontSize="Small" TextColor="Black" FontFamily="Verdana" FontAttributes="Italic"  Text="{Binding Naziv}"></Label>
                                 <Image Aspect="AspectFit" HorizontalOptions="FillAndExpand" Source="{Binding Slika,Converter={StaticResource ImgConverter}}"></Image>
-                                
 
-                                
+
+
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
@@ -43,4 +43,4 @@
 
         </StackLayout>
     </ContentPage.Content>
-</ContentPage>-->
+</ContentPage>

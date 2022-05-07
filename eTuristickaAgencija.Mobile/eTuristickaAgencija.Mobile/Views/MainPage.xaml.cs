@@ -50,7 +50,7 @@ namespace eTuristickaAgencija.Mobile.Views
                     case (int)MenuItemType.MojProfil:
                         MenuPages.Add(id, new NavigationPage(new KorisnikDetaljiPage()));
                         break;
-
+                    
 
                 }
             }

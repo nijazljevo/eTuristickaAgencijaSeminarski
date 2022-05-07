@@ -36,15 +36,15 @@
 
 
                                  <Image HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" HeightRequest="200" WidthRequest="200" Source="{Binding Slika,Converter={StaticResource ImgConverter}}"></Image>
-                                <Label BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="1" Grid.Column="1" TextColor="White" FontAttributes="Bold" FontSize="Medium" Text="{Binding KorisnikoIme}"></Label>
-                                 <Label BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="2" Grid.Column="1" FontSize="Small" TextColor="White" Text="{Binding Ime}"></Label>
-                                <Label BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="3" Grid.Column="1" FontSize="Small" TextColor="White" Text="{Binding Prezime}"></Label>
-                                <Label BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="4" Grid.Column="1" TextColor="White" FontSize="Small" Text="{Binding Email}"></Label>
+                                <Label BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="1" Grid.Column="1" TextColor="Black" FontAttributes="Bold" FontSize="Medium" Text="{Binding KorisnikoIme}"></Label>
+                                <Label BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="2" Grid.Column="1" FontSize="Small" TextColor="Black" Text="{Binding Ime}"></Label>
+                                <Label BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="3" Grid.Column="1" FontSize="Small" TextColor="Black" Text="{Binding Prezime}"></Label>
+                                <Label BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="4" Grid.Column="1" TextColor="Black" FontSize="Small" Text="{Binding Email}"></Label>
 
-                                <Label HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="1" Grid.Column="0" TextColor="White" FontSize="Small" Text="Korisnicko ime:"></Label>
-                                <Label HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="2" Grid.Column="0" FontSize="Small" TextColor="White" Text="Ime:"></Label>
-                                <Label HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="3" Grid.Column="0" FontSize="Small" TextColor="White" Text="Prezime:"></Label>
-                                <Label HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="4" Grid.Column="0" TextColor="White" FontSize="Small" Text="Email:"></Label>
+                                <Label HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="1" Grid.Column="0" TextColor="Black" FontSize="Small" Text="Korisnicko ime:"></Label>
+                                <Label HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="2" Grid.Column="0" FontSize="Small" TextColor="Black" Text="Ime:"></Label>
+                                <Label HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="3" Grid.Column="0" FontSize="Small" TextColor="Black" Text="Prezime:"></Label>
+                                <Label HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="StartAndExpand" Grid.Row="4" Grid.Column="0" TextColor="Black" FontSize="Small" Text="Email:"></Label>
 
 
 

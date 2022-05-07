@@ -34,7 +34,7 @@ namespace eTuristickaAgencija.WinUI.Korisnici
             MemoryStream mStream = new MemoryStream();
             byte[] pData = blob;
             mStream.Write(pData, 0, Convert.ToInt32(pData.Length));
-            Bitmap bm = new Bitmap(mStream, false);
+            Bitmap bm = new Bitmap(mStream, true);
             mStream.Dispose();
             return bm;
         }

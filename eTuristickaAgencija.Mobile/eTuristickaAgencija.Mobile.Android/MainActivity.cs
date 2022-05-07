@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 
 using Android.App;
 using Android.Content.PM;
@@ -30,4 +30,4 @@ namespace eTuristickaAgencija.Mobile.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-}*/
+}

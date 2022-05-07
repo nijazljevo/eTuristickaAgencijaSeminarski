@@ -6,8 +6,10 @@
              mc:Ignorable="d"
              x:Class="eTuristickaAgencija.Mobile.Views.TerminDetaljiPage"
              BackgroundImageSource="Assets/apppozadina.jpg">
-   
 
+    <ContentPage.BindingContext>
+        <ViewModels:TerminDetaljiViewModel></ViewModels:TerminDetaljiViewModel>
+    </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Converters:ImageConverter x:Key="ImgConverter"></Converters:ImageConverter>
@@ -27,9 +29,9 @@
 
 
 
-                            <Label TextColor="White"  VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding Naziv}" FontAttributes="Italic"></Label>
-                            <Label TextColor="White" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Text="Broj zvjezdica"></Label>
-                            <Label TextColor="White" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding BrojZvjezdica}" FontAttributes="Italic"></Label>
+                            <Label TextColor="Black"  VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding Naziv}" FontAttributes="Italic"></Label>
+                            <Label TextColor="Black" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" Text="Broj zvjezdica"></Label>
+                            <Label TextColor="Black" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding BrojZvjezdica}" FontAttributes="Italic"></Label>
                             
 
                         </StackLayout>

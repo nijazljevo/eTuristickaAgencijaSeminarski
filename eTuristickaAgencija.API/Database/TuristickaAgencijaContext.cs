@@ -15,6 +15,7 @@ namespace eTuristickaAgencija.API.Database
         {
         }
 
+        public virtual DbSet<Agencija> Agencija { get; set; }
         public virtual DbSet<Clan> Clan { get; set; }
         public virtual DbSet<Destinacija> Destinacija { get; set; }
         public virtual DbSet<Drzava> Drzava { get; set; }
@@ -40,6 +41,19 @@ namespace eTuristickaAgencija.API.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Agencija>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.Adresa).HasMaxLength(50);
+
+                entity.Property(e => e.Email).HasMaxLength(100);
+
+                entity.Property(e => e.Telefon).HasMaxLength(50);
+            });
+
             modelBuilder.Entity<Clan>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");

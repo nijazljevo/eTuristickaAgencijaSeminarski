@@ -55,30 +55,59 @@ namespace eTuristickaAgencija.WinUI.Termini
     
         private async void frmTerminiDetalji_Load(object sender, EventArgs e)
         {
-            await LoadHoteli();
-            if (!_id.HasValue)
-            {
-                txtCijena.Text = "0";
-                txtPopust.Text = "0";
-                txtAkcijskaCijena.Text = "0";
-                pickerOd.MinDate = System.DateTime.Now;
-                pickerDo.MinDate = System.DateTime.Now;
-                btnObrisi.Visible = false;
-                btnPrint.Visible = false;
-                btnKarte.Visible = false;
-                panel1.Visible = false;
-            }
+            /* await LoadHoteli();
+             if (!_id.HasValue)
+             {
+                 txtCijena.Text = "0";
+                 txtPopust.Text = "0";
+                 txtAkcijskaCijena.Text = "0";
+                 pickerOd.MinDate = System.DateTime.Now;
+                 pickerDo.MinDate = System.DateTime.Now;
+                 btnObrisi.Visible = false;
+                 btnPrint.Visible = false;
+                 btnKarte.Visible = false;
+                 panel1.Visible = false;
+             }
 
 
+             if (_id.HasValue)
+             {
+                 btnObrisi.Visible = true;
+                 btnPrint.Visible = true;
+                 btnKarte.Visible = true;
+                 panel1.Visible = true;
+
+
+
+                 var termin = await _termini.GetById<Models.Termin>(_id);
+                 pickerOd.Value = termin.DatumPolaska;
+                 pickerDo.Value = termin.DatumDolaska;
+                 chcboxAktivan.Checked = termin.AktivanTermin;
+                 txtPopust.Text = termin.Popust.ToString();
+                 txtCijena.Text = termin.Cijena.ToString();
+                 txtAkcijskaCijena.Text = termin.CijenaPopust.ToString();
+
+                 var search = new HotelSearchRequest
+                 {
+                     GradId = termin.GradId
+                 };
+                 var result = await _hoteli.Get<List<Models.Hotel>>(search);
+
+
+                 cmbHotel.DisplayMember = "Naziv";
+                 cmbHotel.ValueMember = "Id";
+
+                 cmbHotel.DataSource = result;
+                 cmbHotel.SelectedValue = termin.HotelId;  
+
+
+             }*/
             if (_id.HasValue)
             {
                 btnObrisi.Visible = true;
-                btnPrint.Visible = true;
                 btnKarte.Visible = true;
+                btnPrint.Visible = true;
                 panel1.Visible = true;
-
-               
-
                 var termin = await _termini.GetById<Models.Termin>(_id);
                 pickerOd.Value = termin.DatumPolaska;
                 pickerDo.Value = termin.DatumDolaska;
@@ -87,25 +116,18 @@ namespace eTuristickaAgencija.WinUI.Termini
                 txtCijena.Text = termin.Cijena.ToString();
                 txtAkcijskaCijena.Text = termin.CijenaPopust.ToString();
 
-
-                //var t = await _termini.GetById<Models.Termin>(_id);
-                var search = new HotelSearchRequest
-                {
-                    GradId = termin.GradId
-                };
-                var result = await _hoteli.Get<List<Models.Hotel>>(search);
-
-
-                cmbHotel.DisplayMember = "Naziv";
-                cmbHotel.ValueMember = "Id";
-
-                cmbHotel.DataSource = result;
-                cmbHotel.SelectedValue = termin.HotelId; //radi novog itema u cmblisti
-                                                         //implementirati update 
-
+                await LoadHoteli();
+                //cmbHotel.SelectedValue = grad.DrzavaId;
+             
 
             }
-
+            else
+            {
+                btnObrisi.Visible = false;
+                btnKarte.Visible = false;
+                btnPrint.Visible = false;
+                await LoadHoteli();
+            }
 
         }
 

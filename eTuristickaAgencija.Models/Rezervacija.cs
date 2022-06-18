@@ -13,5 +13,10 @@ namespace eTuristickaAgencija.Models
         public bool? Otkazana { get; set; }
         public DateTime DatumRezervacije { get; set; }
         public int? KorisnikId { get; set; }
+
+        public static implicit operator List<object>(Rezervacija v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

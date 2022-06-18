@@ -52,27 +52,16 @@ namespace eTuristickaAgencija.WinUI.Destinacije
                 var destinacija = await _destinacija.GetById<Models.Destinacija>(_id);
                 txtNaziv.Text = destinacija.Naziv;
                 var grad = await _gradovi.GetById<Models.Grad>(destinacija.GradId);
-               
-                
                 pbSlika.Image = ByteToImage(destinacija.Slika);
                 pbSlika.Image = Resize(pbSlika.Image, 250, 250);
 
                 var result = await _gradovi.Get<List<Models.Grad>>(null);
 
-               
                 des.Slika = destinacija.Slika;
                 await LoadDrzave();
                 cmbDrzava.SelectedValue = grad.DrzavaId;
                 await LoadGradovi(grad.DrzavaId);
                 cmbGrad.SelectedValue = grad.Id;
-
-                //cmbGrad.DisplayMember = "Naziv";
-                //cmbGrad.ValueMember = "Id";
-                
-                //cmbGrad.DataSource = result;
-                //cmbGrad.SelectedValue = destinacija.GradId; //radi novog itema u cmblisti
-                //                                 //implementirati update 
-
 
             }
             else

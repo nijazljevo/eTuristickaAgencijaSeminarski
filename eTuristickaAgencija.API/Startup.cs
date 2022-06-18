@@ -80,7 +80,7 @@ namespace eTuristickaAgencija.API
             services.AddScoped<ICRUDService<Models.Uposlenik, UposlenikSearchRequest, UposlenikInsertRequest, UposlenikInsertRequest>, UposlenikService>();
             services.AddScoped<ICRUDService<Models.Rezervacija, RezervacijaSearchRequest, RezervacijaInsertRequest, RezervacijaInsertRequest>, RezervacijaService>();
             services.AddScoped<ICRUDService<Models.Agencija, AgencijaSearchRequest, AgencijaInsertRequest, AgencijaInsertRequest>, AgencijaService>();
-
+           
 
             services.AddAuthentication("BasicAuthentication")
                 .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);

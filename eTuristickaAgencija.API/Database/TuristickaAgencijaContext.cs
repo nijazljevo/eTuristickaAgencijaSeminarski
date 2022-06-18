@@ -35,7 +35,7 @@ namespace eTuristickaAgencija.API.Database
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=localhost, 1433;Initial Catalog=TuristickaAgencija; user=sa; Password=ASas.,12");
+                optionsBuilder.UseSqlServer("Data Source=localhost, 1403;Initial Catalog=TuristickaAgencija; user=sa; Password=ASas.,12");
             }
         }
 
@@ -56,6 +56,8 @@ namespace eTuristickaAgencija.API.Database
 
             modelBuilder.Entity<Clan>(entity =>
             {
+                entity.HasIndex(e => e.KorisnikId);
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.DatumRegistracije).HasColumnType("datetime");
@@ -70,6 +72,8 @@ namespace eTuristickaAgencija.API.Database
 
             modelBuilder.Entity<Destinacija>(entity =>
             {
+                entity.HasIndex(e => e.GradId);
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.GradId).HasColumnName("GradID");
@@ -86,6 +90,8 @@ namespace eTuristickaAgencija.API.Database
 
             modelBuilder.Entity<Drzava>(entity =>
             {
+                entity.HasIndex(e => e.KontinentId);
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.KontinentId).HasColumnName("KontinentID");
@@ -102,6 +108,8 @@ namespace eTuristickaAgencija.API.Database
 
             modelBuilder.Entity<Grad>(entity =>
             {
+                entity.HasIndex(e => e.DrzavaId);
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.DrzavaId).HasColumnName("DrzavaID");
@@ -118,6 +126,8 @@ namespace eTuristickaAgencija.API.Database
 
             modelBuilder.Entity<Hotel>(entity =>
             {
+                entity.HasIndex(e => e.GradId);
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.GradId).HasColumnName("GradID");
@@ -134,6 +144,10 @@ namespace eTuristickaAgencija.API.Database
 
             modelBuilder.Entity<Karta>(entity =>
             {
+                entity.HasIndex(e => e.KorisnikId);
+
+                entity.HasIndex(e => e.TerminId);
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.DatumKreiranja).HasColumnType("datetime");
@@ -164,6 +178,8 @@ namespace eTuristickaAgencija.API.Database
 
             modelBuilder.Entity<Korisnik>(entity =>
             {
+                entity.HasIndex(e => e.UlogaId);
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Email).HasMaxLength(100);
@@ -194,6 +210,10 @@ namespace eTuristickaAgencija.API.Database
 
             modelBuilder.Entity<Ocjena>(entity =>
             {
+                entity.HasIndex(e => e.DestinacijaId);
+
+                entity.HasIndex(e => e.KorisnikId);
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.DestinacijaId).HasColumnName("DestinacijaID");
@@ -215,6 +235,10 @@ namespace eTuristickaAgencija.API.Database
 
             modelBuilder.Entity<Rezervacija>(entity =>
             {
+                entity.HasIndex(e => e.HotelId);
+
+                entity.HasIndex(e => e.KorisnikId);
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Cijena).HasColumnType("decimal(8, 2)");
@@ -238,6 +262,12 @@ namespace eTuristickaAgencija.API.Database
 
             modelBuilder.Entity<Termin>(entity =>
             {
+                entity.HasIndex(e => e.DestinacijaId);
+
+                entity.HasIndex(e => e.GradId);
+
+                entity.HasIndex(e => e.HotelId);
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Cijena).HasColumnType("decimal(8, 2)");
@@ -279,8 +309,12 @@ namespace eTuristickaAgencija.API.Database
                     .HasMaxLength(50);
             });
 
+            
+
             modelBuilder.Entity<Uposlenik>(entity =>
             {
+                entity.HasIndex(e => e.KorisnikId);
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.DatumZaposlenja).HasColumnType("datetime");

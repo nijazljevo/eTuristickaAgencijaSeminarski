@@ -11,6 +11,7 @@ namespace eTuristickaAgencija.API.Database
             Karta = new HashSet<Karta>();
             Ocjena = new HashSet<Ocjena>();
             Rezervacija = new HashSet<Rezervacija>();
+            
             Uposlenik = new HashSet<Uposlenik>();
         }
 
@@ -29,6 +30,7 @@ namespace eTuristickaAgencija.API.Database
         public virtual ICollection<Karta> Karta { get; set; }
         public virtual ICollection<Ocjena> Ocjena { get; set; }
         public virtual ICollection<Rezervacija> Rezervacija { get; set; }
+        
         public virtual ICollection<Uposlenik> Uposlenik { get; set; }
     }
 }

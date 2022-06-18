@@ -33,7 +33,7 @@ namespace eTuristickaAgencija.WinUI
                     
                 };
                 var korisnik = await _service.Get<List<Models.Korisnik>>(n);
-                if (this.ValidateChildren() && korisnik.FirstOrDefault() != null && korisnik.FirstOrDefault().UlogaId == 27)
+                if (this.ValidateChildren() && korisnik.FirstOrDefault() != null && korisnik.FirstOrDefault().UlogaId == 1)
                 {
                     await _service.Get<dynamic>(null);
                     await _service2.Get<dynamic>(null);

@@ -70,6 +70,8 @@ namespace eTuristickaAgencija.API.Mappers
             CreateMap<Database.Agencija, AgencijaInsertRequest>().ReverseMap();
             CreateMap<Database.Agencija, Models.Agencija>().ReverseMap();
 
+            
+
         }
 
     }

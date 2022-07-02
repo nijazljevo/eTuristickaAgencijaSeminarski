@@ -13,5 +13,6 @@ RUN dotnet publish "eTuristickaAgencija.API" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
+ADD ./eTuristickaAgencija.API/img ./img
 
 ENTRYPOINT ["dotnet", "eTuristickaAgencija.API.dll"]

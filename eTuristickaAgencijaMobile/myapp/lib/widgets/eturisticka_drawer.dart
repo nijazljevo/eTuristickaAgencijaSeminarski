@@ -37,13 +37,13 @@ class eTuristickaDrawer extends StatelessWidget {
            ListTile(
             title: Text('Destinacije'),
             onTap: () {
-               Navigator.popAndPushNamed(context, DestinacijeListScreen.routeName);
+               Navigator.pushNamed(context, DestinacijeListScreen.routeName);
             },
           ),
            ListTile(
             title: Text('Drzave'),
             onTap: () {
-               Navigator.popAndPushNamed(context, DrzaveListScreen.routeName);
+               Navigator.pushNamed(context, DrzaveListScreen.routeName);
             },
           ),
         ],

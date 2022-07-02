@@ -54,7 +54,8 @@ void main() => runApp(MultiProvider(
           }else  if (settings.name == DestinacijeListScreen.routeName) {
             return MaterialPageRoute(
                 builder: ((context) => DestinacijeListScreen()));
-          }else  if (settings.name == DrzaveListScreen.routeName) {
+          }
+          else  if (settings.name == DrzaveListScreen.routeName) {
             return MaterialPageRoute(
                 builder: ((context) => DrzaveListScreen()));
           }

@@ -1,4 +1,6 @@
 import 'package:myapp/providers/drzave_provider.dart';
+import 'package:myapp/providers/product_providers.dart';
+import 'package:myapp/screen/cart/cart_screen.dart';
 import 'package:myapp/screen/products/product_details_screen.dart';
 import 'package:myapp/utils/util.dart';
 import 'package:myapp/widgets/master_screen.dart';
@@ -9,8 +11,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/drzave.dart';
+import '../../models/product.dart';
+import '../../providers/cart_providers.dart';
 import '../../widgets/eturisticka_drawer.dart';
-import 'drzave_details_screen.dart';
 
 class DrzaveListScreen extends StatefulWidget {
   static const String routeName = "/drzave";
@@ -23,6 +26,7 @@ class DrzaveListScreen extends StatefulWidget {
 
 class _DrzaveListScreenState extends State<DrzaveListScreen> {
   DrzaveProvider? _drzaveProvider = null;
+  CartProvider? _cartProvider = null;
   List<Drzave> data = [];
   TextEditingController _searchController = TextEditingController();
 
@@ -31,6 +35,7 @@ class _DrzaveListScreenState extends State<DrzaveListScreen> {
     // TODO: implement initState
     super.initState();
     _drzaveProvider = context.read<DrzaveProvider>();
+    _cartProvider = context.read<CartProvider>();
     print("called initState");
     loadData();
   }
@@ -131,9 +136,11 @@ class _DrzaveListScreenState extends State<DrzaveListScreen> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, "${DrzaveDetailsScreen.routeName}/${x.drzavaId}");
+                      Navigator.pushNamed(context, "${ProductDetailsScreen.routeName}/${x.drzaveId}");
                     },
-                    
+                    child: Container(
+                      
+                    ),
                   ),
                   Text(x.naziv ?? ""),
                  

@@ -7,10 +7,10 @@ part of 'drzave.dart';
 // **************************************************************************
 
 Drzave _$DrzaveFromJson(Map<String, dynamic> json) => Drzave()
-  ..drzavaId = json['drzavaId'] as int?
+  ..drzaveId = json['drzaveId'] as int?
   ..naziv = json['naziv'] as String?;
 
 Map<String, dynamic> _$DrzaveToJson(Drzave instance) => <String, dynamic>{
-     'drzavaId': instance.drzavaId,
+     'drzaveId': instance.drzaveId,
      'naziv': instance.naziv,
     };

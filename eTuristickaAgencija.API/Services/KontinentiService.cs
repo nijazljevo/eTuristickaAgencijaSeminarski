@@ -17,6 +17,10 @@ namespace eTuristickaAgencija.API.Services
         public override List<Models.Kontinent> Get(KontinentSearchRequest search)
         {
             var query = _turistickacontext.Set<Database.Kontinent>().AsQueryable();
+            if (search.Id != 0)
+            {
+                query = query.Where(x => x.Id == search.Id);
+            }
             if (search.Naziv != null)
             {
                 query = query.Where(x => x.Naziv.Contains(search.Naziv));

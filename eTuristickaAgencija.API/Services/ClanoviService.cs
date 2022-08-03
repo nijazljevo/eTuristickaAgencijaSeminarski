@@ -17,9 +17,10 @@ namespace eTuristickaAgencija.API.Services
         public override List<Models.Clan> Get(ClanSearchRequest search)
         {
             var query = _turistickacontext.Set<Database.Clan>().AsQueryable();
-
-            query = query.Where(x => x.Id == search.ID);
-
+            if (search.ID != 0)
+            {
+                query = query.Where(x => x.Id == search.ID);
+            }
             var list = query.ToList();
             return _mapper.Map<List<Models.Clan>>(list);
         }

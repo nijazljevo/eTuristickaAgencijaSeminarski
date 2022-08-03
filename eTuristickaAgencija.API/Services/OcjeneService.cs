@@ -17,6 +17,10 @@ namespace eTuristickaAgencija.API.Services
         public override List<Models.Ocjena> Get(OcjenaSearchRequest search)
         {
             var query = _turistickacontext.Set<Database.Ocjena>().AsQueryable();
+            if (search.Id != 0)
+            {
+                query = query.Where(x => x.Id == search.Id);
+            }
             if (search.DestinacijaID != 0)
             {
                 query = query.Where(x => x.DestinacijaId == search.DestinacijaID);

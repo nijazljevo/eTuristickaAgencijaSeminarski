@@ -17,9 +17,10 @@ namespace eTuristickaAgencija.API.Services
         public override List<Models.Agencija> Get(AgencijaSearchRequest search)
         {
             var query = _turistickacontext.Set<Database.Agencija>().AsQueryable();
-
-            query = query.Where(x => x.Id == search.Id);
-
+            if (search.Id != 0)
+            {
+                query = query.Where(x => x.Id == search.Id);
+            }
             var list = query.ToList();
             return _mapper.Map<List<Models.Agencija>>(list);
         }

@@ -17,6 +17,10 @@ namespace eTuristickaAgencija.API.Services
         public override List<Models.Hotel> Get(HotelSearchRequest search)
         {
             var query = _turistickacontext.Set<Database.Hotel>().AsQueryable();
+            if (search.Id != 0)
+            {
+                query = query.Where(x => x.Id == search.Id);
+            }
             if (search.Naziv != null)
             {
                 query = query.Where(x => x.Naziv.Contains(search.Naziv));

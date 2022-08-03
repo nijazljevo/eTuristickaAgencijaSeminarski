@@ -6,6 +6,7 @@ namespace eTuristickaAgencija.Models.Request
 {
     public class TerminSearchRequest
     {
+        public int Id { get; set; }
         public int DestinacijaId { get; set; }
         public DateTime? DatumPolaska { get; set; }
         public DateTime? DatumDolaska { get; set; }

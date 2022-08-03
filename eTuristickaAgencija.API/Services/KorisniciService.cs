@@ -35,7 +35,10 @@ namespace eTuristickaAgencija.API.Services
         {
             //var query = _context.Korisnik.AsQueryable();
             var query = _context.Korisnik.AsQueryable();
-
+            if (request.Id != 0)
+            {
+                query = query.Where(x => x.Id == request.Id);
+            }
             if (!string.IsNullOrEmpty(request.KorisnickoIme))
             {
                 query = query.Where(x => x.KorisnikoIme == request.KorisnickoIme);

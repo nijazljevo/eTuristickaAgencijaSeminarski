@@ -17,6 +17,10 @@ namespace eTuristickaAgencija.API.Services
         public override List<Models.Uposlenik> Get(UposlenikSearchRequest search)
         {
             var query = _turistickacontext.Set<Database.Uposlenik>().AsQueryable();
+            if (search.Id != 0)
+            {
+                query = query.Where(x => x.Id == search.Id);
+            }
             if (search.KorisnikId != 0)
             {
                 query = query.Where(x => x.KorisnikId == search.KorisnikId);

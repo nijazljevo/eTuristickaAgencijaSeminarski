@@ -6,7 +6,7 @@ namespace eTuristickaAgencija.Models.Request
 {
     public class UposlenikSearchRequest
     {
-
+        public int Id { get; set; }
         public int KorisnikId { get; set; }
 
         public bool Aktivan { get; set; }

@@ -6,7 +6,7 @@ namespace eTuristickaAgencija.Models.Request
 {
     public class DrzavaSearchRequest
     {
-       
+        public int Id { get; set; }
         public string Naziv { get; set; }
         public int? KontinentId { get; set; }
     }

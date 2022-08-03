@@ -6,7 +6,7 @@ namespace eTuristickaAgencija.Models.Request
 {
     public class OcjenaSearchRequest
     {
-        
+        public int Id { get; set; }
         public int DestinacijaID { get; set; }
         public int TerminId { get; set; }
         //public int OcjenaUsluge { get; set; }

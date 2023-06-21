@@ -25,7 +25,17 @@ namespace eTuristickaAgencija.API.Services
             {
                 query = query.Where(x => x.DestinacijaId == search.DestinacijaId);
             }
-           
+            if (search.GradId != null)
+            {
+                query = query.Where(x => x.GradId == search.GradId);
+            }
+            if (search.HotelId != null)
+            {
+                query = query.Where(x => x.HotelId == search.HotelId);
+            }
+
+
+
             if (search.DatumPolaska.HasValue)
             {
                 query = query.Where(x => x.DatumPolaska.Date >= search.DatumPolaska.Value.Date);

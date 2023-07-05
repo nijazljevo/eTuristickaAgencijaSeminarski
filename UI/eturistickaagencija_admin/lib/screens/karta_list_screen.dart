@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
-import '../models/karta.dart';
-import '../models/termin.dart';
-
 class KartaScreen extends StatefulWidget {
+  const KartaScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _KartaScreenState createState() => _KartaScreenState();
 }
 
@@ -16,7 +16,7 @@ class _KartaScreenState extends State<KartaScreen> {
   List<Termin> termin = [];
   List<Korisnik> korisnik = [];
 
-  String? dateText; // Add a variable to store the entered date text
+  String? dateText; 
 
   @override
   void initState() {
@@ -44,6 +44,7 @@ class _KartaScreenState extends State<KartaScreen> {
         throw Exception('Failed to fetch karta');
       }
     } catch (error) {
+      // ignore: avoid_print
       print(error);
     }
 
@@ -54,7 +55,7 @@ class _KartaScreenState extends State<KartaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Karte'),
+        title: const Text('Karte'),
       ),
       body: Column(
         children: [
@@ -62,55 +63,26 @@ class _KartaScreenState extends State<KartaScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Datum',
-                    ),
-                    onChanged: (value) {
-                      // Update the entered date text
-                      setState(() {
-                        dateText = value;
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(width: 8),
-                DropdownButton<Korisnik>(
-                  value: korisnik.isNotEmpty ? korisnik[0] : null,
-                  onChanged: (value) {
-                    // Handle dropdown value change
-                    // You may store the value in a variable and use it for searching
-                  },
-                  items: korisnik.map((korisnik) {
-                    return DropdownMenuItem<Korisnik>(
-                      value: korisnik,
-                      child: Text(korisnik.ime),
-                    );
-                  }).toList(),
-                ),
-                SizedBox(width: 8),
+               
+                
+                const SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle search button click
-                    // You can use the entered values to search for karte
-                    // Declare variables to store the parsed values
                     DateTime? datumKreiranja;
                     int terminId = 0;
                     int korisnikId = 0;
-
-                    // Parse the entered date text
                     if (dateText != null && dateText!.isNotEmpty) {
                       try {
                         datumKreiranja = DateFormat('yyyy-MM-dd').parse(dateText!);
                       } catch (error) {
+                        // ignore: avoid_print
                         print('Invalid date format');
                       }
                     }
 
                     searchKarte(terminId, korisnikId, datumKreiranja);
                   },
-                  child: Text('Pretraga'),
+                  child: const Text('Pretraga'),
                 ),
               ],
             ),

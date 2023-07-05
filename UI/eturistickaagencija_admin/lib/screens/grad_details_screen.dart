@@ -27,6 +27,7 @@ class DodavanjeGradaScreen extends StatefulWidget {
   const DodavanjeGradaScreen({Key? key, this.grad}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _DodavanjeGradaScreenState createState() => _DodavanjeGradaScreenState();
 }
 
@@ -63,7 +64,7 @@ class _DodavanjeGradaScreenState extends State<DodavanjeGradaScreen> {
 
   Future<void> loadKontinenti() async {
     try {
-      final url = 'http://localhost:5011/api/Kontinenti';
+      const url = 'http://localhost:5011/api/Kontinenti';
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
@@ -80,6 +81,7 @@ class _DodavanjeGradaScreenState extends State<DodavanjeGradaScreen> {
         throw Exception('Failed to fetch kontinenti');
       }
     } catch (error) {
+      // ignore: avoid_print
       print(error);
     }
 
@@ -105,6 +107,7 @@ class _DodavanjeGradaScreenState extends State<DodavanjeGradaScreen> {
         throw Exception('Failed to fetch drzave');
       }
     } catch (error) {
+      // ignore: avoid_print
       print(error);
     }
 
@@ -118,36 +121,40 @@ class _DodavanjeGradaScreenState extends State<DodavanjeGradaScreen> {
       body: jsonEncode(noviGrad.toJson()),
     );
 
+    // ignore: avoid_print
     print('Response status code: ${response.statusCode}');
+    // ignore: avoid_print
     print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('City added successfully.'),
+            title: const Text('Success'),
+            content: const Text('City added successfully.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
         },
       );
     } else {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to add city.'),
+            title: const Text('Error'),
+            content: const Text('Failed to add city.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -166,36 +173,40 @@ class _DodavanjeGradaScreenState extends State<DodavanjeGradaScreen> {
       body: jsonEncode(updatedGrad.toJson()),
     );
 
+    // ignore: avoid_print
     print('Response status code: ${response.statusCode}');
+    // ignore: avoid_print
     print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('City updated successfully.'),
+            title: const Text('Success'),
+            content: const Text('City updated successfully.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
         },
       );
     } else {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to update city.'),
+            title: const Text('Error'),
+            content: const Text('Failed to update city.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -225,10 +236,10 @@ class _DodavanjeGradaScreenState extends State<DodavanjeGradaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gradovi'),
+        title: const Text('Gradovi'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -236,7 +247,7 @@ class _DodavanjeGradaScreenState extends State<DodavanjeGradaScreen> {
             children: [
               TextFormField(
                 controller: _nazivController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'City Name',
                 ),
                 validator: (value) {
@@ -246,7 +257,7 @@ class _DodavanjeGradaScreenState extends State<DodavanjeGradaScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               DropdownButtonFormField<Drzava>(
                 value: selectedDrzava,
                 items: drzave.map((drzava) {
@@ -260,11 +271,11 @@ class _DodavanjeGradaScreenState extends State<DodavanjeGradaScreen> {
                     selectedDrzava = value;
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Country',
                 ),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               DropdownButtonFormField<Kontinent>(
                 value: kontinenti.isNotEmpty ? kontinenti.first : null,
                 items: kontinenti.map((kontinent) {
@@ -279,14 +290,14 @@ class _DodavanjeGradaScreenState extends State<DodavanjeGradaScreen> {
                     loadDrzave('', _selectedKontinentId);
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Continent',
                 ),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: _submitForm,
-                child: Text('Save'),
+                child: const Text('Save'),
               ),
             ],
           ),

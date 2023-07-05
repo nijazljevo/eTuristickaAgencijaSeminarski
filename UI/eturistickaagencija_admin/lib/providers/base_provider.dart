@@ -39,6 +39,7 @@ abstract class BaseProvider<T> with ChangeNotifier{
     return result;
    }
    else{
+    // ignore: unnecessary_new
     throw new Exception("Unknown error");
    }
   }
@@ -55,6 +56,7 @@ abstract class BaseProvider<T> with ChangeNotifier{
      return fromJson(data);
    }
    else{
+        // ignore: unnecessary_new
         throw new Exception("Unknown error");
    }
   }
@@ -71,6 +73,7 @@ abstract class BaseProvider<T> with ChangeNotifier{
      return fromJson(data);
    }
    else{
+        // ignore: unnecessary_new
         throw new Exception("Unknown error");
    }
   }
@@ -82,9 +85,11 @@ abstract class BaseProvider<T> with ChangeNotifier{
     if(response.statusCode<299){
       return true;
     }else if(response.statusCode==401){
+      // ignore: unnecessary_new
       throw new Exception("Unauthorized");
 
     }else{
+      // ignore: unnecessary_new
       throw new Exception("Something bad happened please try again");
     }
   }

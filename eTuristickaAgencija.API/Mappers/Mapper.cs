@@ -17,7 +17,7 @@ namespace eTuristickaAgencija.API.Mappers
             CreateMap<Database.Korisnik, Models.Korisnik>().ReverseMap();
 
 
-            CreateMap<Models.Grad, Database.Grad>(); //stavi database jer nekad ne proradi bez njega,pazi to i za Startup
+            CreateMap<Models.Grad, Database.Grad>(); 
             CreateMap<Database.Grad, Models.Grad>();
             CreateMap<Database.Destinacija, Models.Destinacija>();
             CreateMap<Database.Destinacija, DestinacijaInsertRequest>().ReverseMap();
@@ -32,7 +32,7 @@ namespace eTuristickaAgencija.API.Mappers
 
             CreateMap<Database.Termin, Models.Termin>();
             CreateMap<Database.Termin, TerminInsertRequest>().ReverseMap();
-            CreateMap<Database.Termin, Models.Termin>().ReverseMap();
+           // CreateMap<Database.Termin, Models.Termin>().ReverseMap();
 
             CreateMap<Database.Karta, Models.Karta>();
             CreateMap<Database.Karta, KartaInsertRequest>().ReverseMap();

@@ -1,18 +1,13 @@
 
-import 'package:eturistickaagencija_admin/providers/hotel_provider.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:provider/provider.dart';
+// ignore_for_file: avoid_print
 
-import '../models/hotel.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/korisnik.dart';
 import '../models/search_result.dart';
 import '../providers/korisnik_provider.dart';
 import '../utils/util.dart';
 import '../widgets/master_screen.dart';
-import 'hotel_details_screen.dart';
 import 'korisnik_details_screen.dart';
 
 class KorisnikScreen extends StatefulWidget {
@@ -25,7 +20,8 @@ class KorisnikScreen extends StatefulWidget {
 class _KorisnikScreenState extends State<KorisnikScreen> {
   late KorisnikProvider _korisnikProvider;
   SearchResult<Korisnik>? result;
-  TextEditingController _imeController = new TextEditingController();
+  // ignore: unnecessary_new
+  final TextEditingController _imeController = new TextEditingController();
   List<Korisnik> korisniks = [];
   Korisnik? selectedKorisnik;
 
@@ -39,7 +35,8 @@ class _KorisnikScreenState extends State<KorisnikScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title_widget: Text("Korisnik list"),
+      title_widget: const Text("Korisnik list"),
+      // ignore: avoid_unnecessary_containers
       child: Container(
         child: Column(children: [_buildSearch(), _buildDataListView()]),
       ),
@@ -53,18 +50,17 @@ class _KorisnikScreenState extends State<KorisnikScreen> {
         children: [
           Expanded(
             child: TextField(
-              decoration: InputDecoration(labelText: "Ime"),
+              decoration: const InputDecoration(labelText: "Ime"),
               controller: _imeController,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
          
           ElevatedButton(
               onPressed: () async {
                 print("login proceed");
-                // Navigator.of(context).pop();
 
                 var data = await _korisnikProvider.get(filter: {
                   'ime': _imeController.text,
@@ -74,23 +70,22 @@ class _KorisnikScreenState extends State<KorisnikScreen> {
                   result = data;
                 });
 
-                // print("data: ${data.result[0].naziv}");
               },
-              child: Text("Pretraga")),
-          SizedBox(
+              child: const Text("Pretraga")),
+          const SizedBox(
             width: 8,
           ),
           ElevatedButton(
               onPressed: () async {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => KorisnikDetailsScreen(
+                    builder: (context) => const KorisnikDetailsScreen(
                
                     ),
                   ),
                 );
               },
-              child: Text("Dodaj"))
+              child: const Text("Dodaj"))
         ],
       ),
     );
@@ -100,8 +95,8 @@ class _KorisnikScreenState extends State<KorisnikScreen> {
     return Expanded(
         child: SingleChildScrollView(
       child: DataTable(
-          columns: [
-            const DataColumn(
+          columns: const [
+            DataColumn(
               label: Expanded(
                 child: Text(
                   'ID',
@@ -110,7 +105,7 @@ class _KorisnikScreenState extends State<KorisnikScreen> {
               ),
             ),
            
-            const DataColumn(
+            DataColumn(
               label: Expanded(
                 child: Text(
                   'Ime',
@@ -118,7 +113,7 @@ class _KorisnikScreenState extends State<KorisnikScreen> {
                 ),
               ),
             ),
-            const DataColumn(
+            DataColumn(
               label: Expanded(
                 child: Text(
                   'Prezime',
@@ -126,7 +121,7 @@ class _KorisnikScreenState extends State<KorisnikScreen> {
                 ),
               ),
             ),
-           const DataColumn(
+           DataColumn(
               label: Expanded(
                 child: Text(
                   'Email',
@@ -134,7 +129,7 @@ class _KorisnikScreenState extends State<KorisnikScreen> {
                 ),
               ),
             ),
-             const DataColumn(
+             DataColumn(
               label: Expanded(
                 child: Text(
                   'Korisnicko ime',
@@ -142,7 +137,7 @@ class _KorisnikScreenState extends State<KorisnikScreen> {
                 ),
               ),
             ),
-            const DataColumn(
+            DataColumn(
               label: Expanded(
                 child: Text(
                   'Slika',
@@ -173,12 +168,13 @@ class _KorisnikScreenState extends State<KorisnikScreen> {
                             DataCell(Text(e.email ?? "")),
                             DataCell(Text(e.korisnikoIme ?? "")),
                             DataCell(e.slika != ""
+                                // ignore: sized_box_for_whitespace
                                 ? Container(
                                     width: 100,
                                     height: 100,
                                     child: imageFromBase64String(e.slika!),
                                   )
-                                : Text(""))
+                                : const Text(""))
                           ]))
                   .toList() ??
               []),

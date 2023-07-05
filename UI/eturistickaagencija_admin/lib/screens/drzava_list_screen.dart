@@ -4,7 +4,10 @@ import 'package:http/http.dart' as http;
 import 'drzava_details_screen.dart';
 
 class DrzavaListScreen extends StatefulWidget {
+  const DrzavaListScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _DrzavaListScreennState createState() => _DrzavaListScreennState();
 }
 
@@ -33,6 +36,7 @@ class _DrzavaListScreennState extends State<DrzavaListScreen> {
         throw Exception('Failed to fetch drzava');
       }
     } catch (error) {
+      // ignore: avoid_print
       print(error);
     }
     setState(() {});
@@ -42,7 +46,7 @@ class _DrzavaListScreennState extends State<DrzavaListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Drzave'),
+        title: const Text('Drzave'),
       ),
       body: Column(
         children: [
@@ -52,7 +56,7 @@ class _DrzavaListScreennState extends State<DrzavaListScreen> {
               children: [
                 Expanded(
                   child: TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Naziv',
                     ),
                     onChanged: (value) {
@@ -62,36 +66,25 @@ class _DrzavaListScreennState extends State<DrzavaListScreen> {
                     },
                   ),
                 ),
-                SizedBox(width: 8),
-                DropdownButton<Kontinent>(
-                  value: kontinenti.isNotEmpty ? kontinenti[0] : null,
-                  onChanged: (value) {
-                  },
-                  items: kontinenti.map((kontinent) {
-                    return DropdownMenuItem<Kontinent>(
-                      value: kontinent,
-                      child: Text(kontinent.naziv),
-                    );
-                  }).toList(),
-                ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
+               
                 ElevatedButton(
                   onPressed: () {
                     String naziv = ''; 
                     int kontinentId = 0;
                     searchDrzave(naziv, kontinentId);
                   },
-                  child: Text('Pretraga'),
+                  child: const Text('Pretraga'),
                   
                 ),
-                SizedBox(width: 8,),
+                const SizedBox(width: 8,),
                   ElevatedButton(onPressed: ()async {
                          Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>  DodavanjeDrzaveScreen(),
+                            builder: (context) =>  const DodavanjeDrzaveScreen(),
                           ),
                         );
-                  }, child: Text("Dodaj"))
+                  }, child: const Text("Dodaj"))
               ],
             ),
           ),

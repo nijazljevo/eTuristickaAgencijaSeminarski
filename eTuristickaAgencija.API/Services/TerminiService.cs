@@ -34,8 +34,6 @@ namespace eTuristickaAgencija.API.Services
                 query = query.Where(x => x.HotelId == search.HotelId);
             }
 
-
-
             if (search.DatumPolaska.HasValue)
             {
                 query = query.Where(x => x.DatumPolaska.Date >= search.DatumPolaska.Value.Date);

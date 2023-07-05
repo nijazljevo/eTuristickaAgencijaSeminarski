@@ -1,10 +1,15 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:eturistickaagencija_admin/screens/rezervacija_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class RezervacijeScreen extends StatefulWidget {
+  const RezervacijeScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _RezervacijeScreenState createState() => _RezervacijeScreenState();
 }
 
@@ -22,7 +27,7 @@ class _RezervacijeScreenState extends State<RezervacijeScreen> {
 
   Future<void> searchRezervacije() async {
   double cijena = double.tryParse(cijenaController.text) ?? 0;
-  int hotelId = 0; // Get the selected value from the dropdown
+  int hotelId = 0; 
   int korisnikId = 0;
 
   try {
@@ -54,18 +59,17 @@ class _RezervacijeScreenState extends State<RezervacijeScreen> {
 
   setState(() {
     if (rezervacija.isEmpty) {
-      // Prikazati poruku ako nema rezultata pretrage
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Nema rezultata'),
-          content: Text('Nema rezervacija s unesenom cijenom.'),
+          title: const Text('Nema rezultata'),
+          content: const Text('Nema rezervacija s unesenom cijenom.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ),
@@ -78,7 +82,7 @@ class _RezervacijeScreenState extends State<RezervacijeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rezervacije'),
+        title: const Text('Rezervacije'),
       ),
       body: Column(
         children: [
@@ -89,44 +93,29 @@ class _RezervacijeScreenState extends State<RezervacijeScreen> {
                 Expanded(
                   child: TextField(
                     controller: cijenaController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Cijena',
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
-                DropdownButton<Hotel>(
-                  value: hotel.isNotEmpty ? hotel[0] : null,
-                  onChanged: (value) {
-                    // Handle dropdown value change
-                    // You may store the value in a variable and use it for searching
-                  },
-                  items: hotel.map((hotel) {
-                    return DropdownMenuItem<Hotel>(
-                      value: hotel,
-                      child: Text(hotel.naziv),
-                    );
-                  }).toList(),
-                ),
-                SizedBox(width: 8),
+                
+                const SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle search button click
-                    // You can use the entered values to search for drzave
                     searchRezervacije();
                   },
-                  child: Text('Pretraga'),
+                  child: const Text('Pretraga'),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => DodavanjeRezervacijeScreen(),
+                        builder: (context) => const DodavanjeRezervacijeScreen(),
                       ),
                     );
                   },
-                  child: Text("Dodaj"),
+                  child: const Text("Dodaj"),
                 )
               ],
             ),
@@ -154,6 +143,7 @@ class _RezervacijeScreenState extends State<RezervacijeScreen> {
                             DataCell(Text(e.id.toString())),
                             DataCell(Text(e.cijena.toString())),
                             DataCell(Text(
+                              // ignore: unnecessary_null_comparison
                               e.datumRezervacije != null
                                   ? e.datumRezervacije.toString()
                                   : '',
@@ -171,23 +161,7 @@ class _RezervacijeScreenState extends State<RezervacijeScreen> {
   }
 }
 
-// class Rezervacija {
-//   final int id;
-//   final double cijena;
-//   final String datumRezervacije;r
-//   final bool otkazana;
-//   final int hotelId;
-//   final int korisnikId;
 
-//   Rezervacija({
-//     required this.id,
-//     required this.cijena,
-//     required this.datumRezervacije,
-//     required this.otkazana,
-//     required this.hotelId,
-//     required this.korisnikId,
-//   });
-// }
 
 class Hotel {
   final int id;

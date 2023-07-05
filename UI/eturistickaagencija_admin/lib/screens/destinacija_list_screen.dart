@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../models/grad.dart';
 import '../utils/util.dart';
 import 'destinacija_details_screen.dart';
 
 class DestinacijaListScreen extends StatefulWidget {
+  const DestinacijaListScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _DestinacijaListScreenState createState() => _DestinacijaListScreenState();
 }
 
@@ -44,6 +44,7 @@ class _DestinacijaListScreenState extends State<DestinacijaListScreen> {
         throw Exception('Failed to fetch destinacija');
       }
     } catch (error) {
+      // ignore: avoid_print
       print(error);
     }
 
@@ -54,7 +55,7 @@ class _DestinacijaListScreenState extends State<DestinacijaListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Destinacije'),
+        title: const Text('Destinacije'),
       ),
       body: Column(
         children: [
@@ -64,55 +65,39 @@ class _DestinacijaListScreenState extends State<DestinacijaListScreen> {
               children: [
                 Expanded(
                   child: TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Naziv',
                     ),
                     onChanged: (value) {
-                      // Update the search query when the text field value changes
                       setState(() {
-                        searchDestinacije(value,0, 0,0); // Assuming kontinentId is 0 for all drzave
+                        searchDestinacije(value,0, 0,0); 
                       });
                     },
                   ),
                 ),
-                SizedBox(width: 8),
-                DropdownButton<Kontinent>(
-                  value: kontinenti.isNotEmpty ? kontinenti[0] : null,
-                  onChanged: (value) {
-                    // Handle dropdown value change
-                    // You may store the value in a variable and use it for searching
-                  },
-                  items: kontinenti.map((kontinent) {
-                    return DropdownMenuItem<Kontinent>(
-                      value: kontinent,
-                      child: Text(kontinent.naziv),
-                    );
-                  }).toList(),
-                ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
+               
                 ElevatedButton(
                   onPressed: () {
-                    // Handle search button click
-                    // You can use the entered values to search for drzave
-                    String naziv = ''; // Get the entered value from the text field
+                    String naziv = ''; 
                     int kontinentId = 0;
                     int drzavaId = 0;
-                    int gradId = 0; // Get the selected value from the dropdown
+                    int gradId = 0; 
                     searchDestinacije(naziv,gradId,drzavaId, kontinentId);
                   },
-                  child: Text('Pretraga'),
+                  child: const Text('Pretraga'),
 
                 ),
-                SizedBox(width: 8,),
+                const SizedBox(width: 8,),
                   ElevatedButton(onPressed: ()async {
                     
                          Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>  DestinacijaDetailsScreen(),
+                            builder: (context) =>  const DestinacijaDetailsScreen(),
                           ),
                         );
                      
-                  }, child: Text("Dodaj"))
+                  }, child: const Text("Dodaj"))
               ],
             ),
           ),
@@ -138,13 +123,15 @@ class _DestinacijaListScreenState extends State<DestinacijaListScreen> {
                       cells: [
                         DataCell(Text(e.id?.toString() ?? "")),
                         DataCell(Text(e.naziv ?? "")),
+                         // ignore: unnecessary_null_comparison
                          DataCell(e.slika != null && e.slika != ""
+  // ignore: sized_box_for_whitespace
   ? Container(
       width: 100,
       height: 100,
       child: imageFromBase64String(e.slika!),
     )
-  : Text(""))
+  : const Text(""))
 
                       ],
                     ),
@@ -158,17 +145,7 @@ class _DestinacijaListScreenState extends State<DestinacijaListScreen> {
     );
   }
 }
-// class Destinacija{
-//   final int id;
-//   final String naziv;
-//   final String slika;
 
-//   Destinacija({
-//     required this.id,
-//     required this.naziv,
-//     required this.slika,
-//   });
-// }
 class Grad {
   final int id;
   final String naziv;

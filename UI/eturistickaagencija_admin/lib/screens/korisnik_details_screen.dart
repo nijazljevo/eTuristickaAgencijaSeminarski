@@ -1,13 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import '../models/grad.dart';
-import '../models/hotel.dart';
 import '../models/korisnik.dart';
-import '../models/uloga.dart';
 
 class Korisnik1 {
  final int id;
@@ -54,6 +52,7 @@ class KorisnikDetailsScreen extends StatefulWidget {
   const KorisnikDetailsScreen({Key? key, this.korisnik}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _KorisnikDetailsScreenState createState() => _KorisnikDetailsScreenState();
 }
 
@@ -85,8 +84,6 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
       _prezimeController.text = widget.korisnik!.prezime!;
       _emailController.text = widget.korisnik!.email!;
       _korisnickoImeController.text = widget.korisnik!.korisnikoIme!;
-      //_passwordController.text = widget.korisnik!.password!;
-      //_passowrdPotvrdaController.text = widget.korisnik!.passwordPotvrda!;
    
     }
   }
@@ -94,7 +91,7 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
   Future<void> fetchUloge() async {
 
     try {
-      final url =
+      const url =
           'http://localhost:5011/api/Uloge';
       final response = await http.get(Uri.parse(url));
 
@@ -124,16 +121,17 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
     );
 
     if (response.statusCode == 200) {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('Korisnik added successfully.'),
+            title: const Text('Success'),
+            content: const Text('Korisnik added successfully.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -143,16 +141,17 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
       print('Error: ${response.statusCode}');
       print('Response body: ${response.body}');
 
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to add korisnik.'),
+            title: const Text('Error'),
+            content: const Text('Failed to add korisnik.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -182,32 +181,34 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
     print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('Korisnik updated successfully.'),
+            title: const Text('Success'),
+            content: const Text('Korisnik updated successfully.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
         },
       );
     } else {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to update korisnik.'),
+            title: const Text('Error'),
+            content: const Text('Failed to update korisnik.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -216,6 +217,7 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
     }
   }
    Future<void> pickImage() async {
+    // ignore: deprecated_member_use
     final pickedImage = await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       setState(() {
@@ -257,17 +259,17 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dodaj korisnika'),
+        title: const Text('Dodaj korisnika'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               TextFormField(
                 controller: _imeController,
-                decoration: InputDecoration(labelText: 'Ime'),
+                decoration: const InputDecoration(labelText: 'Ime'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Molimo unesite ime korisnika.';
@@ -277,7 +279,7 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
               ),
                TextFormField(
                 controller: _prezimeController,
-                decoration: InputDecoration(labelText: 'Prezime'),
+                decoration: const InputDecoration(labelText: 'Prezime'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Molimo unesite prezime korisnika.';
@@ -287,7 +289,7 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
               ),
                TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Email'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Molimo unesite email korisnika.';
@@ -297,7 +299,7 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
               ),
                TextFormField(
                 controller: _korisnickoImeController,
-                decoration: InputDecoration(labelText: 'Korisnicko ime'),
+                decoration: const InputDecoration(labelText: 'Korisnicko ime'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Molimo unesite korisnicko ime korisnika.';
@@ -307,7 +309,7 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
               ),
                  TextFormField(
                 controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: const InputDecoration(labelText: 'Password'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Molimo unesite password.';
@@ -317,7 +319,7 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
               ),
                TextFormField(
                 controller: _passowrdPotvrdaController,
-                decoration: InputDecoration(labelText: 'Potvrda password'),
+                decoration: const InputDecoration(labelText: 'Potvrda password'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Molimo potvrdite password.';
@@ -338,7 +340,7 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
                     selectedUloga = newValue;
                   });
                 },
-                decoration: InputDecoration(labelText: 'Uloga'),
+                decoration: const InputDecoration(labelText: 'Uloga'),
                 validator: (value) {
                   if (value == null) {
                     return 'Molimo odaberite ulogu.';
@@ -346,15 +348,15 @@ class _KorisnikDetailsScreenState extends State<KorisnikDetailsScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: pickImage,
-                child: Text('Odaberite sliku'),
+                child: const Text('Odaberite sliku'),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: _submitForm,
-                child: Text('Dodaj'),
+                child: const Text('Dodaj'),
               ),
             ],
           ),

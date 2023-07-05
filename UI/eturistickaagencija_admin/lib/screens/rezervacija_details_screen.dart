@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -40,6 +42,7 @@ class DodavanjeRezervacijeScreen extends StatefulWidget {
 
   const DodavanjeRezervacijeScreen({Key? key, this.rezervacija}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _DodavanjeRezervacijeScreenState createState() =>
       _DodavanjeRezervacijeScreenState();
 }
@@ -47,6 +50,7 @@ class DodavanjeRezervacijeScreen extends StatefulWidget {
 class _DodavanjeRezervacijeScreenState
     extends State<DodavanjeRezervacijeScreen> {
   final _formKey = GlobalKey<FormState>();
+  // ignore: prefer_final_fields
   TextEditingController _cijenaController = TextEditingController();
   late int _selectedKorisnikId;
   List<Korisnik> _korisnik = [];
@@ -125,12 +129,12 @@ class _DodavanjeRezervacijeScreenState
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('Reservation added successfully.'),
+            title: const Text('Success'),
+            content: const Text('Reservation added successfully.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -141,12 +145,12 @@ class _DodavanjeRezervacijeScreenState
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to add reservation.'),
+            title: const Text('Error'),
+            content: const Text('Failed to add reservation.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -172,12 +176,12 @@ class _DodavanjeRezervacijeScreenState
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('Reservation updated successfully.'),
+            title: const Text('Success'),
+            content: const Text('Reservation updated successfully.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -188,12 +192,12 @@ class _DodavanjeRezervacijeScreenState
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to update reservation.'),
+            title: const Text('Error'),
+            content: const Text('Failed to update reservation.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -235,6 +239,7 @@ class _DodavanjeRezervacijeScreenState
       lastDate: DateTime(2100),
     );
     if (picked != null && picked != _selectedDate)
+      // ignore: curly_braces_in_flow_control_structures
       setState(() {
         _selectedDate = picked;
       });
@@ -244,10 +249,10 @@ class _DodavanjeRezervacijeScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add reservation'),
+        title: const Text('Add reservation'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -255,7 +260,7 @@ class _DodavanjeRezervacijeScreenState
             children: [
               TextFormField(
                 controller: _cijenaController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: ' cijena',
                 ),
                 validator: (value) {
@@ -265,8 +270,8 @@ class _DodavanjeRezervacijeScreenState
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
-              Text('Select User:'),
+              const SizedBox(height: 16.0),
+              const Text('Select User:'),
               DropdownButton<int>(
                 value: _selectedKorisnikId,
                 onChanged: (int? newValue) {
@@ -277,12 +282,13 @@ class _DodavanjeRezervacijeScreenState
                 items: _korisnik.map((Korisnik uloga) {
                   return DropdownMenuItem<int>(
                     value: uloga.id,
+                    // ignore: prefer_interpolation_to_compose_strings
                     child: Text(uloga.ime! + " " + uloga.prezime!),
                   );
                 }).toList(),
               ),
-              SizedBox(height: 16.0),
-              Text('Select Hotel:'),
+              const SizedBox(height: 16.0),
+              const Text('Select Hotel:'),
               DropdownButton<int>(
                 value: _selectedHotelId,
                 onChanged: (int? newValue) {
@@ -297,10 +303,10 @@ class _DodavanjeRezervacijeScreenState
                   );
                 }).toList(),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               Row(
                 children: [
-                  Text('Is Canceled:'),
+                  const Text('Is Canceled:'),
                   Checkbox(
                     value: _isCanceled,
                     onChanged: (bool? newValue) {
@@ -311,22 +317,23 @@ class _DodavanjeRezervacijeScreenState
                   ),
                 ],
               ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () => _selectDate(context),
-                child: Text('Select Date'),
+                child: const Text('Select Date'),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
+              // ignore: unnecessary_null_comparison
               if (_selectedDate != null)
                 Text(
                   'Selected Date: ${_selectedDate.toString()}',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
 
               ElevatedButton(
                 onPressed: _submitForm,
-                child: Text('Add'),
+                child: const Text('Add'),
               ),
             ],
           ),
@@ -336,16 +343,4 @@ class _DodavanjeRezervacijeScreenState
   }
 }
 
-// class Uloga {
-//   final int id;
-//   final String naziv;
 
-//   Uloga({required this.id, required this.naziv});
-
-//   factory Uloga.fromJson(Map<String, dynamic> json) {
-//     return Uloga(
-//       id: json['id'],
-//       naziv: json['naziv'],
-//     );
-//   }
-// }

@@ -50,6 +50,7 @@ class _KontinentDetailsScreenState extends State<KontinentDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
+      // ignore: sort_child_properties_last
       child: Column(
         children: [
           isLoading ? Container() : _buildForm(),

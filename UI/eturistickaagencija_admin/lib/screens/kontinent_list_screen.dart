@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/kontinent_provider.dart';
 import '../widgets/master_screen.dart';
-//import 'hotel_details_screen.dart';
 import 'kontinent_details_screen.dart';
 
 class KontinentListScreen extends StatefulWidget {
@@ -17,6 +16,7 @@ class KontinentListScreen extends StatefulWidget {
 class _KontinentListScreenState extends State<KontinentListScreen> {
   late KontinentProvider _kontinentProvider;
   SearchResult<Kontinent>? result;
+  // ignore: prefer_final_fields
   TextEditingController _nazivController = TextEditingController();
 
   @override
@@ -29,6 +29,7 @@ class _KontinentListScreenState extends State<KontinentListScreen> {
   Widget build(BuildContext context) {
     return MasterScreenWidget(
       title_widget: const Text("Kontinent list"),
+      // ignore: avoid_unnecessary_containers
       child: Container(
         child: Column(
           children: [
@@ -66,7 +67,7 @@ class _KontinentListScreenState extends State<KontinentListScreen> {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => KontinentDetailsScreen(kontinent: null),
+                  builder: (context) => const KontinentDetailsScreen(kontinent: null),
                 ),
               );
             },

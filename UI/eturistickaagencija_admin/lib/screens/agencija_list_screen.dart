@@ -5,7 +5,6 @@ import '../models/agencija.dart';
 import '../models/search_result.dart';
 import '../providers/agencija_provider.dart';
 import 'agencija_details_screen.dart';
-import 'hotel_details_screen.dart';
 import '../widgets/master_screen.dart';
 
 class AgencijaListScreen extends StatefulWidget {
@@ -18,6 +17,7 @@ class AgencijaListScreen extends StatefulWidget {
 class _AgencijaListScreenState extends State<AgencijaListScreen> {
   late AgencijaProvider _agencijaProvider;
   SearchResult<Agencija>? result;
+  // ignore: prefer_final_fields
   TextEditingController _emailController = TextEditingController();
 
   @override
@@ -30,6 +30,7 @@ class _AgencijaListScreenState extends State<AgencijaListScreen> {
   Widget build(BuildContext context) {
     return MasterScreenWidget(
       title_widget: const Text("Agencija"),
+      // ignore: avoid_unnecessary_containers
       child: Container(
         child: Column(
           children: [
@@ -58,18 +59,17 @@ class _AgencijaListScreenState extends State<AgencijaListScreen> {
             var data = await _agencijaProvider.get(filter: {'email': _emailController.text});
             setState(() {
               if (data?.result.isEmpty ?? true) {
-                // Prikazati poruku ako nema rezultata pretrage
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('Nema rezultata'),
-                    content: Text('Nema agencija s unesenim e-mailom.'),
+                    title: const Text('Nema rezultata'),
+                    content: const Text('Nema agencija s unesenim e-mailom.'),
                     actions: [
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text('OK'),
+                        child: const Text('OK'),
                       ),
                     ],
                   ),
@@ -81,16 +81,16 @@ class _AgencijaListScreenState extends State<AgencijaListScreen> {
           child: const Text("Pretraga"),
         ),
         const SizedBox(width: 8),
-        ElevatedButton(
-          onPressed: () async {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => AgencijaDetailsScreen(),
-              ),
-            );
-          },
-          child: const Text("Dodaj"),
-        ),
+        // ElevatedButton(
+        //   onPressed: () async {
+        //     Navigator.of(context).push(
+        //       MaterialPageRoute(
+        //         builder: (context) => const AgencijaDetailsScreen(),
+        //       ),
+        //     );
+        //   },
+        //   child: const Text("Dodaj"),
+        // ),
       ],
     ),
   );

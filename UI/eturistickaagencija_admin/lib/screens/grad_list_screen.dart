@@ -7,7 +7,10 @@ import 'package:http/http.dart' as http;
 import 'grad_details_screen.dart';
 
 class GradoviScreen extends StatefulWidget {
+  const GradoviScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _GradoviScreenState createState() => _GradoviScreenState();
 }
 
@@ -42,6 +45,7 @@ class _GradoviScreenState extends State<GradoviScreen> {
         throw Exception('Failed to fetch grad');
       }
     } catch (error) {
+      // ignore: avoid_print
       print(error);
     }
 
@@ -52,7 +56,7 @@ class _GradoviScreenState extends State<GradoviScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gradovi'),
+        title: const Text('Gradovi'),
       ),
       body: Column(
         children: [
@@ -62,54 +66,38 @@ class _GradoviScreenState extends State<GradoviScreen> {
               children: [
                 Expanded(
                   child: TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Naziv',
                     ),
                     onChanged: (value) {
-                      // Update the search query when the text field value changes
                       setState(() {
-                        searchGradovi(value, 0,0); // Assuming kontinentId is 0 for all drzave
+                        searchGradovi(value, 0,0); 
                       });
                     },
                   ),
                 ),
-                SizedBox(width: 8),
-                DropdownButton<Kontinent>(
-                  value: kontinenti.isNotEmpty ? kontinenti[0] : null,
-                  onChanged: (value) {
-                    // Handle dropdown value change
-                    // You may store the value in a variable and use it for searching
-                  },
-                  items: kontinenti.map((kontinent) {
-                    return DropdownMenuItem<Kontinent>(
-                      value: kontinent,
-                      child: Text(kontinent.naziv),
-                    );
-                  }).toList(),
-                ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
+                
                 ElevatedButton(
                   onPressed: () {
-                    // Handle search button click
-                    // You can use the entered values to search for drzave
-                    String naziv = ''; // Get the entered value from the text field
+                    String naziv = ''; 
                     int kontinentId = 0;
-                    int drzavaId = 0; // Get the selected value from the dropdown
+                    int drzavaId = 0; 
                     searchGradovi(naziv,drzavaId, kontinentId);
                   },
-                  child: Text('Pretraga'),
+                  child: const Text('Pretraga'),
                   
                 ),
-                SizedBox(width: 8,),
+                const SizedBox(width: 8,),
                   ElevatedButton(onPressed: ()async {
                     
                          Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>  DodavanjeGradaScreen(),
+                            builder: (context) =>  const DodavanjeGradaScreen(),
                           ),
                         );
                      
-                  }, child: Text("Dodaj"))
+                  }, child: const Text("Dodaj"))
               ],
             ),
           ),
@@ -146,15 +134,7 @@ class _GradoviScreenState extends State<GradoviScreen> {
     );
   }
 }
-// class Grad {
-//   final int id;
-//   final String naziv;
 
-//   Grad({
-//     required this.id,
-//     required this.naziv,
-//   });
-// }
 class Drzava {
   final int id;
   final String naziv;

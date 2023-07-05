@@ -4,13 +4,12 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 
 import '../models/agencija.dart';
-import '../providers/kontinent_provider.dart';
 import '../widgets/master_screen.dart';
 
 class AgencijaDetailsScreen extends StatefulWidget {
   final Agencija? agencija;
 
-  AgencijaDetailsScreen({Key? key, this.agencija}) : super(key: key);
+  const AgencijaDetailsScreen({Key? key, this.agencija}) : super(key: key);
 
   @override
   State<AgencijaDetailsScreen> createState() => _AgencijaDetailsScreenState();
@@ -50,6 +49,7 @@ class _AgencijaDetailsScreenState extends State<AgencijaDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
+      // ignore: sort_child_properties_last
       child: Column(
         children: [
           isLoading ? Container() : _buildForm(),
@@ -57,26 +57,30 @@ class _AgencijaDetailsScreenState extends State<AgencijaDetailsScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState?.saveAndValidate() ?? false) {
                       try {
-                        if (widget.agencija == null) {
-                          await _agencijaProvider.insert(_formKey.currentState?.value);
-                        } else {
+                        // if (widget.agencija == null) {
+                        //   await _agencijaProvider.insert(_formKey.currentState?.value);
+                        // } else {
+                        //   await _agencijaProvider.update(widget.agencija!.id!, _formKey.currentState?.value);
+                        // }
+                        if (widget.agencija != null) {
+                         
                           await _agencijaProvider.update(widget.agencija!.id!, _formKey.currentState?.value);
                         }
                       } on Exception catch (e) {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
-                            title: Text("Error"),
+                            title: const Text("Error"),
                             content: Text(e.toString()),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(context),
-                                child: Text("OK"),
+                                child: const Text("OK"),
                               )
                             ],
                           ),
@@ -84,7 +88,7 @@ class _AgencijaDetailsScreenState extends State<AgencijaDetailsScreen> {
                       }
                     }
                   },
-                  child: Text('Sacuvaj'),
+                  child: const Text('Sacuvaj'),
                 ),
               )
             ],
@@ -106,21 +110,21 @@ class _AgencijaDetailsScreenState extends State<AgencijaDetailsScreen> {
       child: Column(
         children: [
           FormBuilderTextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: "Adresa",
             ),
             name: "adresa",
             validator: FormBuilderValidators.required(context),
           ),
           FormBuilderTextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: "Email",
             ),
             name: "email",
             validator: FormBuilderValidators.required(context),
           ),
           FormBuilderTextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: "Telefon",
             ),
             name: "telefon",

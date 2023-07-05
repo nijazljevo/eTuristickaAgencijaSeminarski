@@ -7,8 +7,6 @@ import 'package:eturistickaagencija_admin/providers/karta_provider.dart';
 import 'package:eturistickaagencija_admin/providers/kontinent_provider.dart';
 import 'package:eturistickaagencija_admin/providers/korisnik_provider.dart';
 import 'package:eturistickaagencija_admin/providers/rezervacija_provider.dart';
-import 'package:eturistickaagencija_admin/providers/termin_provider.dart';
-import 'package:eturistickaagencija_admin/providers/uposlenik_provider.dart';
 import 'package:eturistickaagencija_admin/screens/hotel_list_screen.dart';
 import 'package:eturistickaagencija_admin/utils/util.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +23,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => DestinacijaProvider()),
     ChangeNotifierProvider(create: (_) => KorisnikProvider()),
     ChangeNotifierProvider(create: (_) => RezervacijaProvider()),
-    ChangeNotifierProvider(create: (_) => TerminProvider()),
     ChangeNotifierProvider(create: (_) => KartaProvider()),
-    ChangeNotifierProvider(create: (_) => UposlenikProvider()),
     ],
     child: const MyMaterialApp(),
   ));
@@ -53,11 +49,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LayoutExamples(), //Counter(),
+      home: const LayoutExamples(), //Counter(),
     );
   }
 }
 
+// ignore: must_be_immutable
 class MyAppBar extends StatelessWidget {
   String? title;
   MyAppBar({Key? key, required this.title}) : super(key: key);
@@ -91,11 +88,11 @@ class _CounterState extends State<Counter> {
         Text('You have pushed button $_count times'),
         ElevatedButton(
           onPressed: _incrementCounter,
-          child: Text("Increment++"),
+          child: const Text("Increment++"),
         ),
         ElevatedButton(
           onPressed: _incrementCounter,
-          child: Text("Increment"),
+          child: const Text("Increment"),
         )
       ],
     );
@@ -116,14 +113,15 @@ class LayoutExamples extends StatelessWidget {
             child: Container(
               height: 100,
               color: Colors.blue,
-              child: Text("Example text"),
+              // ignore: sort_child_properties_last
+              child: const Text("Example text"),
               alignment: Alignment.bottomLeft,
             ),
           ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
+          children: const [
             Text("Item 1"),
             Text("Item 2"),
             Text("Item 3"),
@@ -132,7 +130,8 @@ class LayoutExamples extends StatelessWidget {
         Container(
           height: 150,
           color: Colors.red,
-          child: Text("Contain"),
+          // ignore: sort_child_properties_last
+          child: const Text("Contain"),
           alignment: Alignment.center,
         )
       ],
@@ -153,10 +152,13 @@ class MyMaterialApp extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
 
+  // ignore: prefer_final_fields, unnecessary_new
   TextEditingController _usernameController = new TextEditingController();
+  // ignore: prefer_final_fields, unnecessary_new
   TextEditingController _passwordController = new TextEditingController();
   late HotelProvider _hotelProvider;
 
@@ -165,35 +167,35 @@ class LoginPage extends StatelessWidget {
     _hotelProvider = context.read<HotelProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: const Text("Login"),
       ),
       body: Center(
         child: Container(
-          constraints: BoxConstraints(maxWidth: 400, maxHeight: 400),
+          constraints: const BoxConstraints(maxWidth: 400, maxHeight: 400),
           child: Card(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(children: [
                 //  Image.network("https://www.fit.ba/content/public/images/og-image.jpg", height: 100, width: 100,),
                 Image.asset(
-                  "assets/images/logo.jpg",
+                  "assets/images/download.png",
                   height: 100,
                   width: 100,
                 ),
                 TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       labelText: "Username", prefixIcon: Icon(Icons.email)),
                   controller: _usernameController,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       labelText: "Password", prefixIcon: Icon(Icons.password)),
                   controller: _passwordController,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 ElevatedButton(
@@ -202,6 +204,7 @@ class LoginPage extends StatelessWidget {
                       var password = _passwordController.text;
                      // _passwordController.text = username;
 
+                      // ignore: avoid_print
                       print("login proceed $username $password");
 
                       Authorization.username = username;
@@ -210,26 +213,27 @@ class LoginPage extends StatelessWidget {
                       try {
                         await _hotelProvider.get();
 
+                        // ignore: use_build_context_synchronously
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>  HotelListScreen(),
+                            builder: (context) =>  const HotelListScreen(),
                           ),
                         );
                       } on Exception catch (e) {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
-                                  title: Text("Error"),
+                                  title: const Text("Error"),
                                   content: Text(e.toString()),
                                   actions: [
                                     TextButton(
                                         onPressed: () => Navigator.pop(context),
-                                        child: Text("OK"))
+                                        child: const Text("OK"))
                                   ],
                                 ));
                       }
                     },
-                    child: Text("Login"))
+                    child: const Text("Login"))
               ]),
             ),
           ),

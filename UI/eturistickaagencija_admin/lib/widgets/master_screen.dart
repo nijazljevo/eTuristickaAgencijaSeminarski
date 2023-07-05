@@ -1,5 +1,4 @@
 import 'package:eturistickaagencija_admin/main.dart';
-import 'package:eturistickaagencija_admin/screens/hotel_details_screen.dart';
 import 'package:eturistickaagencija_admin/screens/hotel_list_screen.dart';
 import 'package:flutter/material.dart';
 import '../screens/agencija_list_screen.dart';
@@ -10,13 +9,15 @@ import '../screens/karta_list_screen.dart';
 import '../screens/kontinent_list_screen.dart';
 import '../screens/korisnik_list_screen.dart';
 import '../screens/rezervacija_list_screen.dart';
-import '../screens/termin_list_screen.dart';
 
+// ignore: must_be_immutable
 class MasterScreenWidget extends StatefulWidget {
   Widget? child;
   String? title;
+  // ignore: non_constant_identifier_names
   Widget? title_widget;
   
+   // ignore: non_constant_identifier_names
    MasterScreenWidget({this.child,this.title,this.title_widget,Key? key}):super(key: key);
 
   @override
@@ -45,7 +46,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               title: const Text('Hoteli'),
               onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>  HotelListScreen(),),
+                  MaterialPageRoute(builder: (context)=>  const HotelListScreen(),),
                 );
               },
             ),
@@ -61,7 +62,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               title: const Text('Gradovi'),
               onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>  GradoviScreen(),),
+                  MaterialPageRoute(builder: (context)=>  const GradoviScreen(),),
                 );
               },
             ),
@@ -77,7 +78,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               title: const Text('Drzave'),
               onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>   DrzavaListScreen(),),
+                  MaterialPageRoute(builder: (context)=>   const DrzavaListScreen(),),
                 );
               },
             ),
@@ -93,7 +94,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               title: const Text('Destinacije'),
               onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>   DestinacijaListScreen(),),
+                  MaterialPageRoute(builder: (context)=>   const DestinacijaListScreen(),),
                 );
               },
             ),
@@ -101,7 +102,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               title: const Text('Korisnici'),
               onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>   KorisnikScreen(),),
+                  MaterialPageRoute(builder: (context)=>   const KorisnikScreen(),),
                 );
               },
             ),
@@ -109,23 +110,16 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               title: const Text('Rezervacije'),
               onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>   RezervacijeScreen(),),
+                  MaterialPageRoute(builder: (context)=>   const RezervacijeScreen(),),
                 );
               },
             ),
-             ListTile(
-              title: const Text('Termini'),
-              onTap: (){
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>    TerminiScreen(),),
-                );
-              },
-            ),
+            
              ListTile(
               title: const Text('Karte'),
               onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>   KartaScreen(),),
+                  MaterialPageRoute(builder: (context)=>   const KartaScreen(),),
                 );
               },
             ),

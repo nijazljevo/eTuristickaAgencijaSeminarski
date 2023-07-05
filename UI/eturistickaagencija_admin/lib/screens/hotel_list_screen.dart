@@ -1,9 +1,6 @@
 
 import 'package:eturistickaagencija_admin/providers/hotel_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 import '../models/hotel.dart';
@@ -22,6 +19,7 @@ class HotelListScreen extends StatefulWidget {
 class _HotelListScreenState extends State<HotelListScreen> {
   late HotelProvider _hotelProvider;
   SearchResult<Hotel>? result;
+  // ignore: prefer_final_fields, unnecessary_new
   TextEditingController _nazivController = new TextEditingController();
   List<Hotel> hotels = [];
   Hotel? selectedHotel;
@@ -36,7 +34,8 @@ class _HotelListScreenState extends State<HotelListScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreenWidget(
-      title_widget: Text("Hotel list"),
+      title_widget: const Text("Hotel list"),
+      // ignore: avoid_unnecessary_containers
       child: Container(
         child: Column(children: [_buildSearch(), _buildDataListView()]),
       ),
@@ -50,18 +49,18 @@ class _HotelListScreenState extends State<HotelListScreen> {
         children: [
           Expanded(
             child: TextField(
-              decoration: InputDecoration(labelText: "Naziv"),
+              decoration: const InputDecoration(labelText: "Naziv"),
               controller: _nazivController,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
          
           ElevatedButton(
               onPressed: () async {
+                // ignore: avoid_print
                 print("login proceed");
-                // Navigator.of(context).pop();
 
                 var data = await _hotelProvider.get(filter: {
                   'naziv': _nazivController.text,
@@ -71,24 +70,22 @@ class _HotelListScreenState extends State<HotelListScreen> {
                   result = data;
                 });
 
-                // print("data: ${data.result[0].naziv}");
               },
-              child: Text("Pretraga")),
-          SizedBox(
+              child: const Text("Pretraga")),
+          const SizedBox(
             width: 8,
           ),
           ElevatedButton(
               onPressed: () async {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => HotelDetailsScreen(
-                     // hotel: null,
+                    builder: (context) => const HotelDetailsScreen(
+                     
                     ),
                   ),
                 );
-                // print("data: ${data.result[0].naziv}");
               },
-              child: Text("Dodaj"))
+              child: const Text("Dodaj"))
         ],
       ),
     );
@@ -98,8 +95,8 @@ class _HotelListScreenState extends State<HotelListScreen> {
     return Expanded(
         child: SingleChildScrollView(
       child: DataTable(
-          columns: [
-            const DataColumn(
+          columns: const [
+            DataColumn(
               label: Expanded(
                 child: Text(
                   'ID',
@@ -108,7 +105,7 @@ class _HotelListScreenState extends State<HotelListScreen> {
               ),
             ),
            
-            const DataColumn(
+            DataColumn(
               label: Expanded(
                 child: Text(
                   'Naziv',
@@ -116,7 +113,7 @@ class _HotelListScreenState extends State<HotelListScreen> {
                 ),
               ),
             ),
-             const DataColumn(
+             DataColumn(
               label: Expanded(
                 child: Text(
                   'Broj zvjezdica',
@@ -125,7 +122,7 @@ class _HotelListScreenState extends State<HotelListScreen> {
               ),
             ),
            
-            const DataColumn(
+            DataColumn(
               label: Expanded(
                 child: Text(
                   'Slika',
@@ -154,12 +151,13 @@ class _HotelListScreenState extends State<HotelListScreen> {
                             DataCell(Text(e.naziv ?? "")),
                             DataCell(Text(e.brojZvjezdica?.toString() ?? "")),
                             DataCell(e.slika != ""
+                                // ignore: sized_box_for_whitespace
                                 ? Container(
                                     width: 100,
                                     height: 100,
                                     child: imageFromBase64String(e.slika!),
                                   )
-                                : Text(""))
+                                : const Text(""))
                           ]))
                   .toList() ??
               []),

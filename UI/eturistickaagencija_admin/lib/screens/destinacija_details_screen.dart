@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-import '../models/grad.dart';
-import 'grad_details_screen.dart';
 
 
 class Destinacija{
@@ -34,6 +32,7 @@ class DestinacijaDetailsScreen extends StatefulWidget {
 
   const DestinacijaDetailsScreen({Key? key, this.destinacija}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _DestinacijaDetailsScreenState createState() =>
       _DestinacijaDetailsScreenState();
 }
@@ -45,6 +44,7 @@ class _DestinacijaDetailsScreenState extends State<DestinacijaDetailsScreen> {
   List<Kontinent> kontinenti = [];
   List<Grad> grad = [];
   Grad? selectedGrad;
+  // ignore: unused_field
   late int _selectedDrzavaId;
   bool isLoading = true;
   File? selectedImage;
@@ -90,6 +90,7 @@ class _DestinacijaDetailsScreenState extends State<DestinacijaDetailsScreen> {
         throw Exception('Failed to fetch gradovi');
       }
     } catch (error) {
+      // ignore: avoid_print
       print(error);
     }
 
@@ -104,35 +105,39 @@ class _DestinacijaDetailsScreenState extends State<DestinacijaDetailsScreen> {
   );
 
   if (response.statusCode == 200) {
+    // ignore: use_build_context_synchronously
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Success'),
-          content: Text('Destination added successfully.'),
+          title: const Text('Success'),
+          content: const Text('Destination added successfully.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
       },
     );
   } else {
+    // ignore: avoid_print
     print('Error: ${response.statusCode}');
+    // ignore: avoid_print
     print('Response body: ${response.body}');
     
+    // ignore: use_build_context_synchronously
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
-          content: Text('Failed to add destination.'),
+          title: const Text('Error'),
+          content: const Text('Failed to add destination.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -150,36 +155,40 @@ class _DestinacijaDetailsScreenState extends State<DestinacijaDetailsScreen> {
       body: jsonEncode(updatedDestinacija.toJson()),
     );
 
+    // ignore: avoid_print
     print('Response status code: ${response.statusCode}');
+    // ignore: avoid_print
     print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('Destination updated successfully.'),
+            title: const Text('Success'),
+            content: const Text('Destination updated successfully.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
         },
       );
     } else {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to update destination.'),
+            title: const Text('Error'),
+            content: const Text('Failed to update destination.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -188,6 +197,7 @@ class _DestinacijaDetailsScreenState extends State<DestinacijaDetailsScreen> {
     }
   }
  Future<void> pickImage() async {
+    // ignore: deprecated_member_use
     final pickedImage = await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       setState(() {
@@ -219,7 +229,7 @@ class _DestinacijaDetailsScreenState extends State<DestinacijaDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Destinacije'),
+        title: const Text('Destinacije'),
       ),
       body: Column(
         children: [
@@ -231,7 +241,7 @@ class _DestinacijaDetailsScreenState extends State<DestinacijaDetailsScreen> {
                 children: [
                   TextFormField(
                     controller: _nazivController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Destination Name',
                     ),
                     validator: (value) {
@@ -241,7 +251,7 @@ class _DestinacijaDetailsScreenState extends State<DestinacijaDetailsScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   DropdownButton<Grad>(
                     value: selectedGrad,
                     onChanged: (value) {
@@ -256,15 +266,15 @@ class _DestinacijaDetailsScreenState extends State<DestinacijaDetailsScreen> {
                       );
                     }).toList(),
                   ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: pickImage,
-                child: Text('Odaberite sliku'),
+                child: const Text('Odaberite sliku'),
               ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   ElevatedButton(
                     onPressed: _submitForm,
-                    child: Text('Add Destination'),
+                    child: const Text('Add Destination'),
                   ),
                 ],
               ),

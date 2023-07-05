@@ -8,7 +8,7 @@ namespace eTuristickaAgencija.Models.Request
     {
         public int Id { get; set; }
         public int DestinacijaID { get; set; }
-        public int TerminId { get; set; }
+        public int KorisnikID { get; set; }
         //public int OcjenaUsluge { get; set; }
         //public string Komentar { get; set; }
     }

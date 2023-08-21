@@ -238,9 +238,6 @@ class _ProfilState extends State<Profil> {
                                   ),
                                 );
                               });
-                            } else {
-                              // Handle error response
-                              // ...
                             }
                           }
                         },

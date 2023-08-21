@@ -44,10 +44,8 @@ class _ReservationPageState extends State<ReservationPage> {
       setState(() {
         _hotel = responseData.map((data) => Hotel.fromJson(data)).toList();
 
-        // Filtriraj hotele prema gradId
         _hotel = _hotel.where((hotel) => hotel.gradId == widget.destinacija.gradId).toList();
 
-        // Ažuriraj _selectedHotelId ako više ne odgovara nijednom hotelu
         if (!_hotel.any((hotel) => hotel.id == _selectedHotelId)) {
           _selectedHotelId = (_hotel.isNotEmpty ? _hotel.first.id : -1)!;
         }

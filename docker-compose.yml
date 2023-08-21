@@ -18,7 +18,8 @@ services:
     build:
       context: .
     environment:
-      - ConnectionStrings:DefaultConnection=Server=eturistickaagencija-sql,1433;Database=TuristickaAgencija;User=sa;Password=ASas.,12;ConnectRetryCount=0
+      - ConnectionStrings:DefaultConnection=Server=eturistickaagencija-sql,1433;Database=TuristickaAgencija;User=sa;Password=ASas.,12;ConnectRetryCount=0; TrustServerCertificate=True
+      - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - 5011:5011
     networks:

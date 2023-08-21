@@ -31,7 +31,7 @@ class APIService {
       if (responseData is List) {
         if (responseData.isNotEmpty) {
           for (var korisnikData in responseData) {
-            if (korisnikData['korisnikoIme'] == username) {
+            if (korisnikData['korisnikoIme'] == username  ) {
               return Korisnik.fromJson(korisnikData);
             }
           }

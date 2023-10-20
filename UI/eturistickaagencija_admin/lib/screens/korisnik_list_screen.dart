@@ -79,8 +79,8 @@ class _KorisnikScreenState extends State<KorisnikScreen> {
               onPressed: () async {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const KorisnikDetailsScreen(
-               
+                    builder: (context) =>  KorisnikDetailsScreen(
+               korisnik: null,
                     ),
                   ),
                 );

@@ -10,6 +10,6 @@ namespace eTuristickaAgencija.Models
         public byte[] Slika { get; set; }
         public string Naziv { get; set; }
         public int GradId { get; set; }
-        
+        public string StateMachine { get; set; }
     }
 }

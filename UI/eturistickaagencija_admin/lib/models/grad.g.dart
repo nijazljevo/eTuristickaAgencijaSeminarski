@@ -7,13 +7,13 @@ part of 'grad.dart';
 // **************************************************************************
 
 Grad _$GradFromJson(Map<String, dynamic> json) => Grad(
-      json['Id'] as int?,
+      json['id'] as int?,
       json['naziv'] as String?,
       json['drzavaId'] as int?,
     );
 
 Map<String, dynamic> _$GradToJson(Grad instance) => <String, dynamic>{
-      'Id': instance.Id,
+      'id': instance.id,
       'naziv': instance.naziv,
       'drzavaId': instance.drzavaId,
     };

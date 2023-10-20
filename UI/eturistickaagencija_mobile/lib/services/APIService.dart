@@ -2,13 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
+import '../model/destinacija.dart';
+import '../model/hotel.dart';
 import '../model/korisnik.dart';
+import '../model/ocjena.dart';
 
 class APIService {
   static String? username;
   static String? password;
   static int? korisnikId;
-  static const String baseRoute = "http://10.0.2.2:5011/api/";
+  static const String baseRoute = "http://10.0.2.2:7073/";
   String? route;
 
   APIService({this.route});
@@ -211,5 +214,30 @@ class APIService {
 
   return false;
 }
+
+static Future<List<Hotel>?> getHoteli() async {
+  final List<dynamic>? responseData = await get('Hoteli', null);
+  if (responseData != null) {
+    return responseData.map((data) => Hotel.fromJson(data)).toList();
+  }
+  return null;
+}
+static Future<List<Ocjena>?> getOcjene() async {
+  final responseData = await get('Ocjene', null); // Use the API service method
+  if (responseData != null) {
+    List<Ocjena> ocjene = responseData.map((data) => Ocjena.fromJson(data)).toList();
+    return ocjene;
+  }
+  return null;
+  
+}
+static Future<Destinacija?> getDestinacija(int? destinacijaId) async {
+  final responseData = await GetById('Destinacije', destinacijaId!); // Use the API service method
+  if (responseData != null) {
+    return Destinacija.fromJson(responseData);
+  }
+  return null;
+}
+
 
 }

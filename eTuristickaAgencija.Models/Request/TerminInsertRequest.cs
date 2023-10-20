@@ -11,7 +11,7 @@ namespace eTuristickaAgencija.Models.Request
         [Required]
         public int DestinacijaId { get; set; }
         [Required]
-
+        [Range(0, 10000)]
         public decimal Cijena { get; set; }
         public float? Popust { get; set; }
         [Required]

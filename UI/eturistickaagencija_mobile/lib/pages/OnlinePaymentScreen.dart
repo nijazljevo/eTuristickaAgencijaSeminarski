@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import '../model/rezervacija.dart';
+import '../services/APIService.dart';
 
 
 
@@ -47,7 +48,7 @@ class _OnlinePaymentScreenState extends State<OnlinePaymentScreen> {
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: paymentIntent!['client_secret'],
           style: ThemeMode.dark,
-          merchantDisplayName: 'Nijaz'
+          merchantDisplayName: 'Agencija'
         )
       );
 
@@ -85,7 +86,7 @@ class _OnlinePaymentScreenState extends State<OnlinePaymentScreen> {
               ],
             ), 
           ));
-
+        savePaymentData();
         paymentIntent = null;
 
       }).onError((error, stackTrace){
@@ -107,6 +108,30 @@ class _OnlinePaymentScreenState extends State<OnlinePaymentScreen> {
       print('$e');
     }
   }
+ Future<void> savePaymentData() async {
+  try {
+    // Kreiranje podataka o uplati
+    Map<String, dynamic> paymentData = {
+      'korisnikId': widget.reservation.korisnikId,
+      'iznos': widget.reservation.cijena,
+      'datumTransakcije': DateTime.now().toIso8601String(),
+      'brojTransakcije': paymentIntent!['id'],
+    };
+
+    final jsonData = jsonEncode(paymentData);
+    final jsonString = jsonEncode(jsonData);
+    print('JSON data for payment: $jsonString');
+
+    // Poziv API servisa za dodavanje podataka o uplati
+    await APIService.post("Uplate", jsonData);
+
+    // Ovdje možete dodati dodatnu logiku nakon što je uplata uspješno dodana
+
+  } catch (error) {
+    // Greška prilikom komunikacije s API-jem
+    print('Greška prilikom komunikacije s API-jem: $error');
+  }
+}
 
   //  Future<Map<String, dynamic>>
 createPaymentIntent(String amount, String currency) async {

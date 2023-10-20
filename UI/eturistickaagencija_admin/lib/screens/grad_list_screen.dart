@@ -1,157 +1,144 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
-
+import '../models/grad.dart';
+import '../models/search_result.dart';
+import '../providers/grad.dart';
+import '../utils/util.dart';
+import '../widgets/master_screen.dart';
 import 'grad_details_screen.dart';
+import 'hotel_details_screen.dart';
 
-class GradoviScreen extends StatefulWidget {
-  const GradoviScreen({super.key});
+class GradListScreen extends StatefulWidget {
+  const GradListScreen({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _GradoviScreenState createState() => _GradoviScreenState();
+  State<GradListScreen> createState() => _GradListScreenState();
 }
 
-class _GradoviScreenState extends State<GradoviScreen> {
-  List<Drzava> drzave = [];
-  List<Kontinent> kontinenti = [];
-  List<Grad> grad = [];
+class _GradListScreenState extends State<GradListScreen> {
+  late GradProvider _gradProvider;
+  SearchResult<Grad>? result;
+  // ignore: prefer_final_fields, unnecessary_new
+  TextEditingController _nazivController = new TextEditingController();
   
-
   @override
-  void initState() {
-    super.initState();
-  }
-
-
-    
-
-  Future<void> searchGradovi(String naziv,int drzavaId, int kontinentId) async {
-    try {
-      final url = 'http://localhost:5011/api/Gradovi?naziv=$naziv&drzavaId=$drzavaId&kontinentId=$kontinentId';
-      final response = await http.get(Uri.parse(url));
-
-      if (response.statusCode == 200) {
-        final List<dynamic> responseData = json.decode(response.body);
-        grad = responseData.map((data) {
-          return Grad(
-            id: data['id'],
-            naziv: data['naziv'],
-          );
-        }).toList();
-      } else {
-        throw Exception('Failed to fetch grad');
-      }
-    } catch (error) {
-      // ignore: avoid_print
-      print(error);
-    }
-
-    setState(() {});
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _gradProvider = context.read<GradProvider>();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gradovi'),
+    return MasterScreenWidget(
+      title_widget: const Text("Grad list"),
+      // ignore: avoid_unnecessary_containers
+      child: Container(
+        child: Column(children: [_buildSearch(), _buildDataListView()]),
       ),
-      body: Column(
+    );
+  }
+
+  Widget _buildSearch() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      labelText: 'Naziv',
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        searchGradovi(value, 0,0); 
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(width: 8),
-                
-                ElevatedButton(
-                  onPressed: () {
-                    String naziv = ''; 
-                    int kontinentId = 0;
-                    int drzavaId = 0; 
-                    searchGradovi(naziv,drzavaId, kontinentId);
-                  },
-                  child: const Text('Pretraga'),
-                  
-                ),
-                const SizedBox(width: 8,),
-                  ElevatedButton(onPressed: ()async {
-                    
-                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>  const DodavanjeGradaScreen(),
-                          ),
-                        );
-                     
-                  }, child: const Text("Dodaj"))
-              ],
-            ),
-          ),
           Expanded(
-            child: DataTable(
-              columns: const [
-                DataColumn(label: Text('ID')),
-                DataColumn(label: Text('Naziv')),
-              ],
-             rows: grad
-                  .map(
-                    (Grad e) => DataRow(
-                      onSelectChanged: (selected) {
-                        if (selected == true) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => DodavanjeGradaScreen(grad: e as Grad),
-                            ),
-                          );
-                        }
-                      },
-                      cells: [
-                        DataCell(Text(e.id?.toString() ?? "")),
-                        DataCell(Text(e.naziv ?? "")),
-                      ],
-                    ),
-                  )
-                  .toList() ??
-              [],
+            child: TextField(
+              decoration: const InputDecoration(labelText: "Naziv"),
+              controller: _nazivController,
             ),
           ),
+          const SizedBox(
+            width: 8,
+          ),
+         
+          ElevatedButton(
+              onPressed: () async {
+                // ignore: avoid_print
+                print("login proceed");
+
+                var data = await _gradProvider.get(filter: {
+                  'naziv': _nazivController.text,
+                });
+
+                setState(() {
+                  result = data;
+                });
+
+              },
+              child: const Text("Pretraga")),
+          const SizedBox(
+            width: 8,
+          ),
+          ElevatedButton(
+              onPressed: () async {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>  GradDetailsScreen(
+                     grad: null,
+                    ),
+                  ),
+                );
+              },
+              child: const Text("Dodaj"))
         ],
       ),
     );
   }
+
+  Widget _buildDataListView() {
+    return Expanded(
+        child: SingleChildScrollView(
+      child: DataTable(
+          columns: const [
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'ID',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+           
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'Naziv',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+           
+           
+           
+          ],
+          rows: result?.result
+    .map((Grad e) {
+      return DataRow(
+        onSelectChanged: (selected) {
+          if (selected == true) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => GradDetailsScreen(
+                  grad: e,
+                ),
+              ),
+            );
+          }
+        },
+        cells: [
+          DataCell(Text(e.id?.toString() ?? "")),
+          DataCell(Text(e.naziv ?? "")),
+        ],
+      );
+    })
+    .toList() ??
+    [],
+),
+    ));
+  }
 }
-
-class Drzava {
-  final int id;
-  final String naziv;
-
-  Drzava({
-    required this.id,
-    required this.naziv,
-  });
-}
-
-class Kontinent {
-  final int id;
-  final String naziv;
-
-  Kontinent({
-    required this.id,
-    required this.naziv,
-  });
-}
-

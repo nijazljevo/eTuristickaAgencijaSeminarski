@@ -1,7 +1,20 @@
 version: '3'
 services:
 #mssql docker
-  eturistickaagencija-sql:
+ 
+  rabbitmq:
+    image: 'rabbitmq:3.6-management-alpine'
+    ports:
+      - '5673:5672'
+      - '15673:15672'
+    environment:
+      AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    networks:
+      - network
+
+  eturiatickaagencija-sql:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     restart: unless-stopped
     environment:
@@ -9,26 +22,25 @@ services:
       - SA_PASSWORD=ASas.,12
       - MSSQL_PID=Developer
     ports:
-      - 1403:1433
+      - 1401:1433
     networks:
-      - eturistickaagencijanet
+      - eturiatickaagencijanet
 
-  eturistickaagencija-api:
+  eturiatickaagencija-api:
     restart: unless-stopped
     build:
       context: .
     environment:
-      - ConnectionStrings:DefaultConnection=Server=eturistickaagencija-sql,1433;Database=TuristickaAgencija;User=sa;Password=ASas.,12;ConnectRetryCount=0; TrustServerCertificate=True
+      - ConnectionStrings:DefaultConnection=Server=eturiatickaagencija-sql,1433;Database=TuristickaAgencija;User=sa;Password=ASas.,12;ConnectRetryCount=0;TrustServerCertificate=True
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - 5011:5011
+      - 7073:7073
     networks:
-      - eturistickaagencijanet
-    links:
-      - eturistickaagencija-sql
+      - eturiatickaagencijanet
     depends_on:
-      - eturistickaagencija-sql
-      
+      - eturiatickaagencija-sql
+
 networks:
-  eturistickaagencijanet:
-    driver: bridge      
+  network: {}
+  eturiatickaagencijanet:
+    driver: bridge

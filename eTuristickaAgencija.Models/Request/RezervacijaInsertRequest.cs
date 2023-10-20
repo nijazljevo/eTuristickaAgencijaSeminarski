@@ -8,6 +8,7 @@ namespace eTuristickaAgencija.Models.Request
     public class RezervacijaInsertRequest
     {
         [Required]
+        [Range(0,10000)]
         public decimal Cijena { get; set; }
         [Required]
         public int? HotelId { get; set; }

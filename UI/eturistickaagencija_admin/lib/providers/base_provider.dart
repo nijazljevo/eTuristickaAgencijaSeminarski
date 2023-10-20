@@ -10,7 +10,7 @@ abstract class BaseProvider<T> with ChangeNotifier{
   String _endpoint="";
   BaseProvider(String endpoint){
     _endpoint=endpoint;
-    _baseUrl=const String.fromEnvironment("baseUrl",defaultValue: "http://localhost:5011/api/");
+    _baseUrl=const String.fromEnvironment("baseUrl",defaultValue: "http://localhost:7073/");
   }
   Future<SearchResult<T>>get( {dynamic filter})async{
     var url="$_baseUrl$_endpoint";
@@ -27,7 +27,7 @@ abstract class BaseProvider<T> with ChangeNotifier{
     var response=await http.get(uri,headers: headers);
 
 
-   // print("response: ${response.request} ${response.statusCode} ${response.body}");
+    print("response: ${response.request} ${response.statusCode} ${response.body}");
    if(isValidResponse(response)){
      var data=jsonDecode(response.body);
      var result=SearchResult<T>();

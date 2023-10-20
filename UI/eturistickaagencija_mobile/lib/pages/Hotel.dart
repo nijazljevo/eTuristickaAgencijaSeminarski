@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/hotel.dart';
+import '../services/APIService.dart';
 import '../utils/util.dart';
 
 class HotelListPage extends StatefulWidget {
   const HotelListPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _HotelListPageState createState() => _HotelListPageState();
 }
 
@@ -23,21 +23,46 @@ class _HotelListPageState extends State<HotelListPage> {
   }
 
   Future<void> fetchHotelData() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:5011/api/Hoteli'));
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      setState(() {
-        hotels = List<Hotel>.from(data.map((json) => Hotel.fromJson(json)));
-      });
-    } else {
-      // ignore: use_build_context_synchronously
+   try {
+      final List<dynamic>? fetchedData =
+          await APIService.get('Hoteli', null);
+      if (fetchedData != null) {
+        final List<Hotel> fetchedHotel =
+            fetchedData.map((json) => Hotel.fromJson(json)).toList();
+        setState(() {
+          hotels = fetchedHotel;
+        });
+      } else {
+        // Prikazati grešku ako fetchedData nije validan
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Greška'),
+              content: const Text(
+                  'Došlo je do greške prilikom dohvata podataka hotela.'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (e) {
+      print('Greška prilikom dohvata podataka hotela: $e');
+      // Prikazati grešku u slučaju iznimke
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Greška'),
-            content: const Text('Došlo je do greške prilikom dohvata podataka hotela.'),
+            content: const Text(
+                'Došlo je do greške prilikom dohvata podataka hotela.'),
             actions: [
               ElevatedButton(
                 onPressed: () {
@@ -59,9 +84,8 @@ class _HotelListPageState extends State<HotelListPage> {
         title: const Text('Hoteli'),
       ),
       body: ListView(
-        padding: const EdgeInsets.only(top: 16.0), 
+        padding: const EdgeInsets.only(top: 16.0),
         children: [
-        
           _buildDataListView(),
         ],
       ),
@@ -71,7 +95,7 @@ class _HotelListPageState extends State<HotelListPage> {
   Widget _buildDataListView() {
     return SingleChildScrollView(
       child: DataTable(
-        dataRowColor: MaterialStateColor.resolveWith((states) => Colors.white), 
+        dataRowColor: MaterialStateColor.resolveWith((states) => Colors.white),
         columns: const [
           DataColumn(
             label: Expanded(
@@ -84,12 +108,12 @@ class _HotelListPageState extends State<HotelListPage> {
           DataColumn(
             label: Expanded(
               child: Text(
-                'Brojzvjezdica',
+                'Broj zvjezdica',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             ),
           ),
-           DataColumn(
+          DataColumn(
             label: Expanded(
               child: Text(
                 'Slika',
@@ -106,7 +130,7 @@ class _HotelListPageState extends State<HotelListPage> {
                 ? Container(
                     width: 100,
                     height: 100,
-                    color: Colors.white, 
+                    color: Colors.white,
                     child: imageFromBase64String(e.slika!),
                   )
                 : const Text("")),

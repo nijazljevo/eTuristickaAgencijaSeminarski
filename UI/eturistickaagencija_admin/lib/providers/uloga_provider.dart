@@ -4,7 +4,7 @@ import 'package:eturistickaagencija_admin/providers/base_provider.dart';
 
 
 class UlogaProvider extends BaseProvider<Uloga>{
-  UlogaProvider():super("Hoteli");
+  UlogaProvider():super("Uloge");
 
   @override
   Uloga fromJson(data) {

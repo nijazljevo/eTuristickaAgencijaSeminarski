@@ -62,7 +62,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
               title: const Text('Gradovi'),
               onTap: (){
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context)=>  const GradoviScreen(),),
+                  MaterialPageRoute(builder: (context)=>  const GradListScreen(),),
                 );
               },
             ),

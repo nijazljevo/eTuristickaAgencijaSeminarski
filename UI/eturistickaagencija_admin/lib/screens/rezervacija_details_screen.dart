@@ -1,339 +1,253 @@
-// ignore_for_file: avoid_print, use_build_context_synchronously
-
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import '../models/hotel.dart';
 import '../models/korisnik.dart';
-class Rezervacija{
-  final int id;
-  final double cijena;
-  final int? hotelId;
-  final bool otkazana;
-  final String datumRezervacije;
-  final int? korisnikId;
-  Rezervacija({
-    required this.id,
-    required this.cijena,
-    required this.hotelId,
-    required this.otkazana,
-    required this.datumRezervacije,
-    required this.korisnikId,
-  });
+import '../models/rezervacija.dart';
+import '../models/search_result.dart';
+import '../providers/hotel_provider.dart';
+import '../providers/korisnik_provider.dart';
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {
-      'id': id,
-      'cijena': cijena,
-      'hotelId': hotelId,
-      'otkazana': otkazana,
-      'datumRezervacije': datumRezervacije,
-      'korisnikId': korisnikId,
-    };
-
-    return json;
-  }
-}
-
-class DodavanjeRezervacijeScreen extends StatefulWidget {
-  
+class ReservationScreen extends StatefulWidget {
   final Rezervacija? rezervacija;
+  ReservationScreen({Key? key, this.rezervacija}) : super(key: key);
 
-  const DodavanjeRezervacijeScreen({Key? key, this.rezervacija}) : super(key: key);
   @override
-  // ignore: library_private_types_in_public_api
-  _DodavanjeRezervacijeScreenState createState() =>
-      _DodavanjeRezervacijeScreenState();
+  _ReservationScreenState createState() => _ReservationScreenState();
 }
 
-class _DodavanjeRezervacijeScreenState
-    extends State<DodavanjeRezervacijeScreen> {
-  final _formKey = GlobalKey<FormState>();
-  // ignore: prefer_final_fields
-  TextEditingController _cijenaController = TextEditingController();
-  late int _selectedKorisnikId;
-  List<Korisnik> _korisnik = [];
-  late int _selectedHotelId;
-  List<Hotel> _hotel = [];
-  late bool _isCanceled = false;
-  late DateTime _selectedDate=DateTime.now();
+class _ReservationScreenState extends State<ReservationScreen> {
+  double price = 0;
+  DateTime? selectedDate;
+  bool? isCancelled;
+  late HotelProvider _hotelProvider;
+  late KorisnikProvider _korisnikProvider;
+  final _formKey = GlobalKey<FormBuilderState>();
+  SearchResult<Hotel>? hotelResult;
+  SearchResult<Korisnik>? korisnikResult;
   bool isLoading = true;
-  Hotel? selectedHotel;
-  Korisnik? selectedKorisnik;
+  late Rezervacija _reservation;
+  bool _isEditingMode = false;
+  String? selectedHotelId;
+  String? selectedKorisnikId;
+
   @override
   void initState() {
     super.initState();
-    _selectedHotelId = -1;
-    _selectedKorisnikId = -1;
-    fetchKorisnik();
-    fetchHotel();
-      if (widget.rezervacija != null) {
-      _cijenaController.text = widget.rezervacija!.cijena.toString() ;
-     if (widget.rezervacija != null) {
-  _cijenaController.text = widget.rezervacija!.cijena.toString();
-  if (_hotel.isNotEmpty && widget.rezervacija!.hotelId != null) {
-    selectedHotel = _hotel.firstWhere(
-        (hotel) => hotel.id == widget.rezervacija!.hotelId);
-  }
-  if (_korisnik.isNotEmpty && widget.rezervacija!.korisnikId != null) {
-    selectedKorisnik = _korisnik.firstWhere(
-        (korisnik) => korisnik.id == widget.rezervacija!.korisnikId);
-  }
-}
 
-    }
-  }
-
-  @override
-  void dispose() {
-    _cijenaController.dispose();
-    super.dispose();
-  }
-
- Future<void> fetchKorisnik() async {
-    final response =
-        await http.get(Uri.parse('http://localhost:5011/api/Korisnici'));
-    if (response.statusCode == 200) {
-      final List<dynamic> responseData = jsonDecode(response.body);
-      setState(() {
-        _korisnik =
-            responseData.map((data) => Korisnik.fromJson(data)).toList();
-        _selectedKorisnikId =
-            (_korisnik.isNotEmpty ? _korisnik.first.id : -1)!;
-      });
-    }
-  }
-    Future<void> fetchHotel() async {
-    final response =
-        await http.get(Uri.parse('http://localhost:5011/api/Hoteli'));
-    if (response.statusCode == 200) {
-      final List<dynamic> responseData = jsonDecode(response.body);
-      setState(() {
-        _hotel = responseData.map((data) => Hotel.fromJson(data)).toList();
-        _selectedHotelId = (_hotel.isNotEmpty ? _hotel.first.id : -1)!;
-      });
-    }
-  }
-
-  Future<void> addRezervacija(Rezervacija novaRezervacija) async {
-    final response = await http.post(
-      Uri.parse('http://localhost:5011/api/Rezervacija'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(novaRezervacija.toJson()),
-    );
-     print(response.body);
-
-    if (response.statusCode == 200) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Success'),
-            content: const Text('Reservation added successfully.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+    if (widget.rezervacija != null) {
+      _reservation = widget.rezervacija!;
+      selectedDate = _reservation.datumRezervacije;
+      price = _reservation.cijena!;
+      isCancelled = _reservation.otkazana;
+      _isEditingMode = true;
+      selectedHotelId = _reservation.hotelId.toString();
+      selectedKorisnikId = _reservation.korisnikId.toString();
     } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: const Text('Failed to add reservation.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+      selectedDate = DateTime.now();
+      price = 0;
+      isCancelled = false;
     }
-  }
-   Future<void> editReservation(Rezervacija rezervacija) async {
-    final updatedRezervacija =
-        Rezervacija(id: rezervacija.id, cijena: rezervacija.cijena, hotelId: rezervacija.hotelId,datumRezervacije: rezervacija.datumRezervacije,korisnikId: rezervacija.korisnikId,otkazana: rezervacija.otkazana);
 
-    final response = await http.put(
-      Uri.parse('http://localhost:5011/api/Rezervacija/${rezervacija.id}'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(updatedRezervacija.toJson()),
-    );
+    _hotelProvider = context.read<HotelProvider>();
+    _korisnikProvider = context.read<KorisnikProvider>();
 
-    print('Response status code: ${response.statusCode}');
-    print('Response body: ${response.body}');
-
-    if (response.statusCode == 200) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Success'),
-            content: const Text('Reservation updated successfully.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: const Text('Failed to update reservation.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    }
+    initForm();
   }
 
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      final double cijena = double.parse( _cijenaController.text.trim());
-       final DateTime formattedDate = DateTime(
-      _selectedDate.year,
-      _selectedDate.month,
-      _selectedDate.day,
-    );
-      final Rezervacija novaRezervacija = Rezervacija(
-        id: widget.rezervacija?.id ?? 0,
-        cijena:cijena,
-        korisnikId: _selectedKorisnikId,
-        hotelId: _selectedHotelId,
-        otkazana: _isCanceled,
-        datumRezervacije:formattedDate.toIso8601String(),
+  Future<void> initForm() async {
+    hotelResult = await _hotelProvider.get();
+    korisnikResult = await _korisnikProvider.get();
 
-      );
-
-       if (widget.rezervacija != null) {
-        editReservation(novaRezervacija);
-      } else {
-        addRezervacija(novaRezervacija);
-      }
-    }
+    setState(() {
+      isLoading = false;
+    });
   }
- Future<void> _selectDate(BuildContext context) async {
+
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(DateTime.now().year + 1),
     );
-    if (picked != null && picked != _selectedDate)
-      // ignore: curly_braces_in_flow_control_structures
+    if (picked != null && picked != selectedDate) {
       setState(() {
-        _selectedDate = picked;
+        selectedDate = picked;
       });
+    }
+  }
+
+  Future<void> _selectHotel(BuildContext context) async {
+    final selectedHotel = await showDialog<Hotel?>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Odaberite Hotel'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                for (final hotel in hotelResult?.result ?? [])
+                  ListTile(
+                    title: Text(hotel.naziv ?? ''),
+                    onTap: () => Navigator.of(context).pop(hotel),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    if (selectedHotel != null) {
+      setState(() {
+        this.selectedHotelId = selectedHotel.id.toString();
+      });
+    }
+  }
+
+  Future<void> _selectKorisnik(BuildContext context) async {
+    final selectedKorisnik = await showDialog<Korisnik?>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Odaberite Korisnika'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                for (final korisnik in korisnikResult?.result ?? [])
+                  ListTile(
+                    title: Text(korisnik.ime ?? '' + ' ' + korisnik.prezime ?? ''),
+                    onTap: () => Navigator.of(context).pop(korisnik),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    if (selectedKorisnik != null) {
+      setState(() {
+        this.selectedKorisnikId = selectedKorisnik.id.toString();
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add reservation'),
+        title: Text(_isEditingMode ? 'Uredi Rezervaciju' : 'Dodaj Rezervaciju'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
+        child: FormBuilder(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                controller: _cijenaController,
-                decoration: const InputDecoration(
-                  labelText: ' cijena',
+            children: <Widget>[
+              FormBuilderTextField(
+                name: 'cijena',
+                decoration: InputDecoration(labelText: 'Cijena'),
+                validator: FormBuilderValidators.required(context),
+                keyboardType: TextInputType.number,
+                initialValue: price?.toString(),
+                onChanged: (value) {
+                  setState(() {
+                    double? parsedPrice = double.tryParse(value ?? '0');
+                    if (parsedPrice != null) {
+                      setState(() {
+                        price = parsedPrice;
+                      });
+                    }
+                  });
+                },
+              ),
+              GestureDetector(
+                onTap: () => _selectDate(context),
+                child: AbsorbPointer(
+                  child: FormBuilderTextField(
+                    name: 'datumRezervacije',
+                    decoration: InputDecoration(labelText: 'Datum Rezervacije'),
+                    controller: TextEditingController(
+                      text: selectedDate != null
+                          ? DateFormat('dd/MM/yyyy').format(selectedDate!)
+                          : '',
+                    ),
+                  ),
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter price.';
-                  }
-                  return null;
-                },
               ),
-              const SizedBox(height: 16.0),
-              const Text('Select User:'),
-              DropdownButton<int>(
-                value: _selectedKorisnikId,
-                onChanged: (int? newValue) {
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(labelText: 'Hotel'),
+                items: hotelResult?.result
+                        .map((item) => DropdownMenuItem(
+                              alignment: AlignmentDirectional.center,
+                              value: item.id!.toString(),
+                              child: Text(item.naziv ?? ''),
+                            ))
+                        .toList() ??
+                    [],
+                value: selectedHotelId,
+                onChanged: (newValue) {
                   setState(() {
-                    _selectedKorisnikId = newValue!;
+                    selectedHotelId = newValue;
                   });
                 },
-                items: _korisnik.map((Korisnik uloga) {
-                  return DropdownMenuItem<int>(
-                    value: uloga.id,
-                    // ignore: prefer_interpolation_to_compose_strings
-                    child: Text(uloga.ime! + " " + uloga.prezime!),
-                  );
-                }).toList(),
               ),
-              const SizedBox(height: 16.0),
-              const Text('Select Hotel:'),
-              DropdownButton<int>(
-                value: _selectedHotelId,
-                onChanged: (int? newValue) {
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(labelText: 'Korisnik'),
+                items: korisnikResult?.result
+                        .map((item) => DropdownMenuItem(
+                              alignment: AlignmentDirectional.center,
+                              value: item.id!.toString(),
+                              child: Text(item.ime! + " " + item.prezime!),
+                            ))
+                        .toList() ??
+                    [],
+                value: selectedKorisnikId,
+                onChanged: (newValue) {
                   setState(() {
-                    _selectedHotelId = newValue!;
+                    selectedKorisnikId = newValue;
                   });
                 },
-                items: _hotel.map((Hotel uloga) {
-                  return DropdownMenuItem<int>(
-                    value: uloga.id,
-                    child: Text(uloga.naziv!),
-                  );
-                }).toList(),
               ),
-              const SizedBox(height: 16.0),
               Row(
                 children: [
-                  const Text('Is Canceled:'),
+                  Text('Otkazana: '),
                   Checkbox(
-                    value: _isCanceled,
-                    onChanged: (bool? newValue) {
+                    value: isCancelled ?? false,
+                    onChanged: (value) {
                       setState(() {
-                        _isCanceled = newValue!;
+                        isCancelled = value;
                       });
                     },
                   ),
                 ],
               ),
-                const SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () => _selectDate(context),
-                child: const Text('Select Date'),
-              ),
-              const SizedBox(height: 16.0),
-              // ignore: unnecessary_null_comparison
-              if (_selectedDate != null)
-                Text(
-                  'Selected Date: ${_selectedDate.toString()}',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              const SizedBox(height: 16.0),
-
-              ElevatedButton(
-                onPressed: _submitForm,
-                child: const Text('Add'),
+                onPressed: () async {
+                  if (_formKey.currentState!.saveAndValidate()) {
+                    if (widget.rezervacija != null) {
+                      // Ažuriraj postojeću rezervaciju
+                      await updateReservation(_reservation);
+                    } else {
+                      // Dodaj novu rezervaciju
+                      await addReservation(
+                        price.toInt(),
+                        selectedDate!,
+                        isCancelled!,
+                        int.parse(selectedHotelId ?? '0'),
+                        int.parse(selectedKorisnikId ?? '0'),
+                      );
+                    }
+                  }
+                },
+                child: Text('Sačuvaj'),
               ),
             ],
           ),
@@ -341,6 +255,74 @@ class _DodavanjeRezervacijeScreenState
       ),
     );
   }
+
+  Future<void> addReservation(int price, DateTime reservationDate, bool isCancelled, int hotelId, int korisnikId) async {
+    final url = Uri.parse('http://localhost:7073/Rezervacija');
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'cijena': price,
+          'hotelId': hotelId,
+          'otkazana': isCancelled,
+          'datumRezervacije': reservationDate.toIso8601String(),
+          'korisnikId': korisnikId,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Rezervacija uspješno dodana
+        print('Rezervacija je uspješno dodana u bazi.');
+      } else {
+        // Greška prilikom dodavanja rezervacije
+        print('Došlo je do greške prilikom dodavanja rezervacije u bazu.');
+      }
+    } catch (e) {
+      // Greška u komunikaciji s API-jem
+      print('Došlo je do greške u komunikaciji s API-jem: $e');
+    }
+  }
+
+  Future<void> updateReservation(Rezervacija reservation) async {
+    final url = Uri.parse('http://localhost:7073/Rezervacija/${reservation.id}');
+    try {
+  final response = await http.put(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: jsonEncode({
+      'id': reservation.id,
+      'cijena': price,
+      'hotelId': int.tryParse(selectedHotelId ?? '0') ?? 0,
+      'otkazana': isCancelled ?? false,
+      'datumRezervacije': selectedDate?.toIso8601String(),
+
+      'korisnikId': int.tryParse(selectedKorisnikId ?? '0') ?? 0,
+    }),
+  );
+
+  print('HTTP PUT Request: ${url.toString()}');
+  print('Request Body: ${jsonEncode({
+    'id': reservation.id,
+    'cijena': price,
+    'hotelId': int.tryParse(selectedHotelId ?? '0') ?? 0,
+    'otkazana': isCancelled ?? false,
+    'datumRezervacije': selectedDate?.toIso8601String(),
+    'korisnikId': int.tryParse(selectedKorisnikId ?? '0') ?? 0,
+  })}');
+  
+  print('HTTP Response Status Code: ${response.statusCode}');
+  print('HTTP Response Body: ${response.body}');
+  
+  // ...
+} catch (e) {
+  // Greška u komunikaciji s API-jem
+  print('Došlo je do greške u komunikaciji s API-jem: $e');
 }
 
-
+  }
+}

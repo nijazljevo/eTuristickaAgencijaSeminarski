@@ -21,9 +21,7 @@ class _HotelListScreenState extends State<HotelListScreen> {
   SearchResult<Hotel>? result;
   // ignore: prefer_final_fields, unnecessary_new
   TextEditingController _nazivController = new TextEditingController();
-  List<Hotel> hotels = [];
-  Hotel? selectedHotel;
-
+  
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -79,8 +77,8 @@ class _HotelListScreenState extends State<HotelListScreen> {
               onPressed: () async {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const HotelDetailsScreen(
-                     
+                    builder: (context) =>  HotelDetailsScreen(
+                     hotel: null,
                     ),
                   ),
                 );

@@ -1,178 +1,158 @@
-import 'dart:convert';
+
+import 'package:eturistickaagencija_admin/models/destinacija.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import '../models/search_result.dart';
+import '../providers/destinacija_provider.dart';
 import '../utils/util.dart';
+import '../widgets/master_screen.dart';
 import 'destinacija_details_screen.dart';
+import 'hotel_details_screen.dart';
 
 class DestinacijaListScreen extends StatefulWidget {
-  const DestinacijaListScreen({super.key});
+  const DestinacijaListScreen({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _DestinacijaListScreenState createState() => _DestinacijaListScreenState();
+  State<DestinacijaListScreen> createState() => _DestinacijaListScreenState();
 }
 
 class _DestinacijaListScreenState extends State<DestinacijaListScreen> {
-  List<Drzava> drzave = [];
-  List<Kontinent> kontinenti = [];
-  List<Grad> grad = [];
-  List<Destinacija> destinacija = [];
+  late DestinacijaProvider _destinacijaProvider;
+  SearchResult<Destinacija>? result;
+  // ignore: prefer_final_fields, unnecessary_new
+  TextEditingController _nazivController = new TextEditingController();
+  List<Destinacija> destinacijas = [];
+  Destinacija? selectedDestinacija;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-
-    
-
-  Future<void> searchDestinacije(String naziv,int gradId,int drzavaId, int kontinentId) async {
-    try {
-      final url = 'http://localhost:5011/api/Destinacije?naziv=$naziv&gradId=$gradId&drzavaId=$drzavaId&kontinentId=$kontinentId';
-      final response = await http.get(Uri.parse(url));
-
-      if (response.statusCode == 200) {
-        final List<dynamic> responseData = json.decode(response.body);
-        destinacija = responseData.map((data) {
-          return Destinacija(
-            id: data['id'],
-            naziv: data['naziv'],
-            slika: data['slika'],
-          );
-        }).toList();
-      } else {
-        throw Exception('Failed to fetch destinacija');
-      }
-    } catch (error) {
-      // ignore: avoid_print
-      print(error);
-    }
-
-    setState(() {});
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _destinacijaProvider = context.read<DestinacijaProvider>();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Destinacije'),
+    return MasterScreenWidget(
+      title_widget: const Text("Destinacija list"),
+      // ignore: avoid_unnecessary_containers
+      child: Container(
+        child: Column(children: [_buildSearch(), _buildDataListView()]),
       ),
-      body: Column(
+    );
+  }
+
+  Widget _buildSearch() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      labelText: 'Naziv',
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        searchDestinacije(value,0, 0,0); 
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(width: 8),
-               
-                ElevatedButton(
-                  onPressed: () {
-                    String naziv = ''; 
-                    int kontinentId = 0;
-                    int drzavaId = 0;
-                    int gradId = 0; 
-                    searchDestinacije(naziv,gradId,drzavaId, kontinentId);
-                  },
-                  child: const Text('Pretraga'),
-
-                ),
-                const SizedBox(width: 8,),
-                  ElevatedButton(onPressed: ()async {
-                    
-                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>  const DestinacijaDetailsScreen(),
-                          ),
-                        );
-                     
-                  }, child: const Text("Dodaj"))
-              ],
-            ),
-          ),
           Expanded(
-            child: DataTable(
-              columns: const [
-                DataColumn(label: Text('ID')),
-                DataColumn(label: Text('Naziv')),
-                DataColumn(label: Text('Slika')),
-              ],
-            rows: destinacija
-                  .map(
-                    (Destinacija e) => DataRow(
-                      onSelectChanged: (selected) {
-                        if (selected == true) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => DestinacijaDetailsScreen(destinacija: e),
-                            ),
-                          );
-                        }
-                      },
-                      cells: [
-                        DataCell(Text(e.id?.toString() ?? "")),
-                        DataCell(Text(e.naziv ?? "")),
-                         // ignore: unnecessary_null_comparison
-                         DataCell(e.slika != null && e.slika != ""
-  // ignore: sized_box_for_whitespace
-  ? Container(
-      width: 100,
-      height: 100,
-      child: imageFromBase64String(e.slika!),
-    )
-  : const Text(""))
-
-                      ],
-                    ),
-                  )
-                  .toList() ??
-              [],
+            child: TextField(
+              decoration: const InputDecoration(labelText: "Naziv"),
+              controller: _nazivController,
             ),
           ),
+          const SizedBox(
+            width: 8,
+          ),
+         
+          ElevatedButton(
+              onPressed: () async {
+                // ignore: avoid_print
+                print("login proceed");
+
+                var data = await _destinacijaProvider.get(filter: {
+                  'naziv': _nazivController.text,
+                });
+
+                setState(() {
+                  result = data;
+                });
+
+              },
+              child: const Text("Pretraga")),
+          const SizedBox(
+            width: 8,
+          ),
+          ElevatedButton(
+              onPressed: () async {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>  DestinacijaDetailsScreen(
+                     destinacija: null,
+                    ),
+                  ),
+                );
+              },
+              child: const Text("Dodaj"))
         ],
       ),
     );
   }
+
+  Widget _buildDataListView() {
+    return Expanded(
+        child: SingleChildScrollView(
+      child: DataTable(
+          columns: const [
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'ID',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+           
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'Naziv',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+            
+           
+            DataColumn(
+              label: Expanded(
+                child: Text(
+                  'Slika',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            )
+          ],
+          rows: result?.result
+                  .map((Destinacija e) => DataRow(
+                          onSelectChanged: (selected) => {
+                                if (selected == true)
+                                  {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DestinacijaDetailsScreen(
+                                          destinacija: e,
+                                        ),
+                                      ),
+                                    )
+                                  }
+                              },
+                          cells: [
+                            DataCell(Text(e.id?.toString() ?? "")),
+                            DataCell(Text(e.naziv ?? "")),
+                            DataCell(e.slika != ""
+                                // ignore: sized_box_for_whitespace
+                                ? Container(
+                                    width: 100,
+                                    height: 100,
+                                    child: imageFromBase64String(e.slika!),
+                                  )
+                                : const Text(""))
+                          ]))
+                  .toList() ??
+              []),
+    ));
+  }
 }
-
-class Grad {
-  final int id;
-  final String naziv;
-
-  Grad({
-    required this.id,
-    required this.naziv,
-  });
-}
-class Drzava {
-  final int id;
-  final String naziv;
-
-  Drzava({
-    required this.id,
-    required this.naziv,
-  });
-}
-
-class Kontinent {
-  final int id;
-  final String naziv;
-
-  Kontinent({
-    required this.id,
-    required this.naziv,
-  });
-}
-
-

@@ -17,7 +17,6 @@ class ReservationPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _ReservationPageState createState() => _ReservationPageState();
 }
 
@@ -38,13 +37,10 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   Future<void> fetchHoteliForDestinacija() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:5011/api/Hoteli'));
-    if (response.statusCode == 200) {
-      final List<dynamic> responseData = jsonDecode(response.body);
+    final List<Hotel>? hotels = await APIService.getHoteli();
+    if (hotels != null) {
       setState(() {
-        _hotel = responseData.map((data) => Hotel.fromJson(data)).toList();
-
-        _hotel = _hotel.where((hotel) => hotel.gradId == widget.destinacija.gradId).toList();
+        _hotel = hotels.where((hotel) => hotel.gradId == widget.destinacija.gradId).toList();
 
         if (!_hotel.any((hotel) => hotel.id == _selectedHotelId)) {
           _selectedHotelId = (_hotel.isNotEmpty ? _hotel.first.id : -1)!;
@@ -60,40 +56,39 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   Future<void> submitReservation() async {
-    Rezervacije reservation = Rezervacije(
-      hotelId: _selectedHotelId,
-      korisnikId: APIService.korisnikId!,
-      datumRezervacije: selectedDate!,
-      otkazana: isCancelled,
-      cijena: price,
-    );
+    if (APIService.korisnikId != null) {
+      Rezervacije reservation = Rezervacije(
+        hotelId: _selectedHotelId,
+        korisnikId: APIService.korisnikId!,
+        datumRezervacije: selectedDate!,
+        otkazana: isCancelled,
+        cijena: price,
+      );
 
-  //  String reservationJson = jsonEncode(reservation.toJson());
-final jsonData = reservation.toJson();
-    final jsonString = jsonEncode(jsonData);
-   // ignore: avoid_print
-   print('JSON data: $jsonString');
-  await APIService.post("Rezervacija", json.encode(jsonData));
-    // ignore: use_build_context_synchronously
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: SizedBox(
-          height: 20,
-          child: Center(child: Text("Uspješno")),
+      final jsonData = reservation.toJson();
+      final jsonString = jsonEncode(jsonData);
+      print('JSON data: $jsonString');
+      await APIService.post("Rezervacija", json.encode(jsonData));
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: SizedBox(
+            height: 20,
+            child: Center(child: Text("Uspješno")),
+          ),
+          backgroundColor: Color.fromARGB(255, 9, 100, 13),
         ),
-        backgroundColor: Color.fromARGB(255, 9, 100, 13),
-      ),
-    );
-      // ignore: use_build_context_synchronously
+      );
+
       Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => OnlinePaymentScreen(reservation: reservation),
-    ),
-  );
-
-
-    
+        context,
+        MaterialPageRoute(
+          builder: (context) => OnlinePaymentScreen(reservation: reservation),
+        ),
+      );
+    } else {
+      // Obrada ako je APIService.korisnikId null
+    }
   }
 
   @override
@@ -114,19 +109,18 @@ final jsonData = reservation.toJson();
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              
               const Text('Odaberi Hotel:'),
-              DropdownButton<int>(
-                value: _selectedHotelId,
-                onChanged: (int? newValue) {
+              DropdownButton<Hotel>(
+                value: selectedHotel,
+                onChanged: (Hotel? newValue) {
                   setState(() {
-                    _selectedHotelId = newValue!;
+                    selectedHotel = newValue;
                   });
                 },
-                items: _hotel.map((Hotel uloga) {
-                  return DropdownMenuItem<int>(
-                    value: uloga.id,
-                    child: Text(uloga.naziv!),
+                items: _hotel.map((Hotel hotel) {
+                  return DropdownMenuItem<Hotel>(
+                    value: hotel,
+                    child: Text(hotel.naziv ?? ""),
                   );
                 }).toList(),
               ),
@@ -172,7 +166,6 @@ final jsonData = reservation.toJson();
               ElevatedButton(
                 onPressed: () {
                   submitReservation();
-                  
                 },
                 child: const Text('Potvrdi rezervaciju'),
               ),

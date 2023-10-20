@@ -1,144 +1,108 @@
-import 'dart:convert';
+import 'package:eturistickaagencija_admin/providers/karta_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import '../models/karta.dart';
+import '../models/search_result.dart';
+import '../utils/util.dart';
+import '../widgets/master_screen.dart';
 import 'package:intl/intl.dart';
 
 class KartaScreen extends StatefulWidget {
-  const KartaScreen({super.key});
+  const KartaScreen({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _KartaScreenState createState() => _KartaScreenState();
+  State<KartaScreen> createState() => _KartaScreenState();
 }
 
 class _KartaScreenState extends State<KartaScreen> {
-  List<Karta> karta = [];
-  List<Termin> termin = [];
-  List<Korisnik> korisnik = [];
-
-  String? dateText; 
+  late KartaProvider _kartaProvider;
+  SearchResult<Karta>? result;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  Future<void> searchKarte(int terminId, int korisnikId, DateTime? datumKreiranja) async {
-    try {
-      final url =
-          'http://localhost:5011/api/Karte?terminId=$terminId&korisnikId=$korisnikId&datumKreiranja=$datumKreiranja';
-      final response = await http.get(Uri.parse(url));
-
-      if (response.statusCode == 200) {
-        final List<dynamic> responseData = json.decode(response.body);
-        karta = responseData.map((data) {
-          DateTime? datumKreiranja = data['datumKreiranja'] != null
-              ? DateTime.parse(data['datumKreiranja'])
-              : null;
-          return Karta(
-            id: data['id'],
-            datumKreiranja: datumKreiranja ?? DateTime(1900),
-          );
-        }).toList();
-      } else {
-        throw Exception('Failed to fetch karta');
-      }
-    } catch (error) {
-      // ignore: avoid_print
-      print(error);
-    }
-
-    setState(() {});
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _kartaProvider = context.read<KartaProvider>();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Karte'),
+    return MasterScreenWidget(
+      title_widget: const Text("Lista karata"),
+      child: Container(
+        child: Column(
+          children: [
+            _buildSearch(),
+            _buildDataListView(),
+          ],
+        ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-               
-                
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: () {
-                    DateTime? datumKreiranja;
-                    int terminId = 0;
-                    int korisnikId = 0;
-                    if (dateText != null && dateText!.isNotEmpty) {
-                      try {
-                        datumKreiranja = DateFormat('yyyy-MM-dd').parse(dateText!);
-                      } catch (error) {
-                        // ignore: avoid_print
-                        print('Invalid date format');
-                      }
-                    }
+    );
+  }
 
-                    searchKarte(terminId, korisnikId, datumKreiranja);
-                  },
-                  child: const Text('Pretraga'),
-                ),
-              ],
-            ),
+  Widget _buildSearch() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 8,
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: DataTable(
-                columns: const [
-                  DataColumn(label: Text('ID')),
-                  DataColumn(label: Text('Datum kreiranja')),
-                ],
-                rows: karta.map((karta) {
-                  return DataRow(cells: [
-                    DataCell(Text(karta.id.toString())),
-                    DataCell(Text(
-                      karta.datumKreiranja != null
-                          ? karta.datumKreiranja.toString()
-                          : '',
-                    )),
-                  ]);
-                }).toList(),
-              ),
-            ),
+          ElevatedButton(
+            onPressed: () async {
+              var filter = <String, dynamic>{};
+
+              var data = await _kartaProvider.get(filter: filter);
+
+              setState(() {
+                result = data;
+              });
+            },
+            child: const Text("Pretraga"),
           ),
         ],
       ),
     );
   }
-}
 
-class Karta {
-  final int id;
-  final DateTime? datumKreiranja;
+  Widget _buildDataListView() {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: DataTable(
+          columns: const [
+            DataColumn(
+              label: Text(
+                'ID',
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
+            ),
+            DataColumn(
+              label: Text(
+                'Datum Kreiranja',
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
+            ),
+          ],
+          rows: result?.result
+                  .map(
+                    (Karta e) => DataRow(
+                      
+                      
+                      cells: [
+                        DataCell(Text(e.id?.toString() ?? "")),
+                      DataCell(Text(
+                           e.datumKreiranja.toString()
+                          
+                    )),
 
-  Karta({
-    required this.id,
-    required this.datumKreiranja,
-  });
-}
 
-class Termin {
-  final int id;
-  final double cijena;
 
-  Termin({
-    required this.id,
-    required this.cijena,
-  });
-}
-
-class Korisnik {
-  final int id;
-  final String ime;
-
-  Korisnik({
-    required this.id,
-    required this.ime,
-  });
+                      ],
+                    ),
+                  )
+                  .toList() ??
+              [],
+        ),
+      ),
+    );
+  }
 }

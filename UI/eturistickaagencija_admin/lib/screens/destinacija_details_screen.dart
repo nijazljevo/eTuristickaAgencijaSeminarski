@@ -1,317 +1,215 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:eturistickaagencija_admin/providers/grad.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-
-
-
-class Destinacija{
-  final int id;
-  final String naziv;
-  final int? gradId;
-  final String slika;
-
-  Destinacija({required this.id, required this.naziv, this.gradId,required this.slika});
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {
-      'id': id,
-      'naziv': naziv,
-      'gradId': gradId,
-      'slika':slika
-    };
-
-    return json;
-  }
-}
+import 'package:provider/provider.dart';
+import '../models/destinacija.dart';
+import '../models/grad.dart';
+import '../models/hotel.dart';
+import '../models/search_result.dart';
+import '../providers/destinacija_provider.dart';
+import '../providers/hotel_provider.dart';
+import '../widgets/master_screen.dart';
 
 class DestinacijaDetailsScreen extends StatefulWidget {
-  final Destinacija? destinacija;
+  Destinacija? destinacija;
+  DestinacijaDetailsScreen({Key? key, this.destinacija}) : super(key: key);
 
-  const DestinacijaDetailsScreen({Key? key, this.destinacija}) : super(key: key);
   @override
-  // ignore: library_private_types_in_public_api
-  _DestinacijaDetailsScreenState createState() =>
-      _DestinacijaDetailsScreenState();
+  State<DestinacijaDetailsScreen> createState() => _DestinacijaDetailsScreenState();
 }
 
 class _DestinacijaDetailsScreenState extends State<DestinacijaDetailsScreen> {
-  final _formKey = GlobalKey<FormState>();
-  late TextEditingController _nazivController;
-  List<Drzava> drzave = [];
-  List<Kontinent> kontinenti = [];
-  List<Grad> grad = [];
-  Grad? selectedGrad;
-  // ignore: unused_field
-  late int _selectedDrzavaId;
+  final _formKey = GlobalKey<FormBuilderState>();
+  Map<String, dynamic> _initialValue = {};
+  late GradProvider _gradProvider;
+  late DestinacijaProvider _destinacijaProvider;
+
+  SearchResult<Grad>? gradResult;
   bool isLoading = true;
-  File? selectedImage;
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    _selectedDrzavaId = -1;
-    fetchGradovi();
-    _nazivController = TextEditingController();
-    if (widget.destinacija != null) {
-      _nazivController.text = widget.destinacija!.naziv;
-      if (widget.destinacija!.gradId != null) {
-        selectedGrad =
-            grad.firstWhere((drzava) => drzava.id == widget.destinacija!.gradId);
-      }
-    }
-  }
-    @override
-  void dispose() {
-    _nazivController.dispose();
-    super.dispose();
+    _initialValue = {
+      'naziv': widget.destinacija?.naziv,
+      'gradId': widget.destinacija?.gradId?.toString(),
+    };
+
+    _gradProvider = context.read<GradProvider>();
+    _destinacijaProvider = context.read<DestinacijaProvider>();
+
+    initForm();
   }
 
-  Future<void> fetchGradovi() async {
-    int kontinentId = 0;
-    int drzavaId = 0; // Set the desired values for drzavaId and kontinentId
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
 
-    try {
-      final url =
-          'http://localhost:5011/api/Gradovi?drzavaId=$drzavaId&kontinentId=$kontinentId';
-      final response = await http.get(Uri.parse(url));
-
-      if (response.statusCode == 200) {
-        final List<dynamic> responseData = json.decode(response.body);
-        grad = responseData.map((data) {
-          return Grad(
-            id: data['id'],
-            naziv: data['naziv'],
-          );
-        }).toList();
-      } else {
-        throw Exception('Failed to fetch gradovi');
-      }
-    } catch (error) {
-      // ignore: avoid_print
-      print(error);
-    }
-
-    setState(() {});
-  }
-
- Future<void> addDestination(Destinacija noviGrad) async {
-  final response = await http.post(
-    Uri.parse('http://localhost:5011/api/Destinacije'),
-    headers: {'Content-Type': 'application/json'},
-    body: jsonEncode(noviGrad.toJson()),
-  );
-
-  if (response.statusCode == 200) {
-    // ignore: use_build_context_synchronously
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Success'),
-          content: const Text('Destination added successfully.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  } else {
-    // ignore: avoid_print
-    print('Error: ${response.statusCode}');
-    // ignore: avoid_print
-    print('Response body: ${response.body}');
-    
-    // ignore: use_build_context_synchronously
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Error'),
-          content: const Text('Failed to add destination.'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
- Future<void> editDestination(Destinacija destinacija) async {
-    final updatedDestinacija =
-        Destinacija(id: destinacija.id, naziv: destinacija.naziv, gradId: destinacija.gradId,slika:destinacija.slika);
-
-    final response = await http.put(
-      Uri.parse('http://localhost:5011/api/Destinacije/${destinacija.id}'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(updatedDestinacija.toJson()),
-    );
-
-    // ignore: avoid_print
-    print('Response status code: ${response.statusCode}');
-    // ignore: avoid_print
-    print('Response body: ${response.body}');
-
-    if (response.statusCode == 200) {
-      // ignore: use_build_context_synchronously
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Success'),
-            content: const Text('Destination updated successfully.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // ignore: use_build_context_synchronously
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: const Text('Failed to update destination.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    }
-  }
- Future<void> pickImage() async {
-    // ignore: deprecated_member_use
-    final pickedImage = await ImagePicker().getImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      setState(() {
-        selectedImage = File(pickedImage.path);
-      });
-    }
-  }
-
-
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      final String naziv = _nazivController.text.trim();
    
-      final Destinacija noviGrad = Destinacija(
-        id: widget.destinacija?.id ?? 0,
-        naziv: naziv,
-        gradId: selectedGrad?.id,
-        slika: selectedImage != null ? base64Encode(selectedImage!.readAsBytesSync()) : '',
-      );
-       if (widget.destinacija != null) {
-        editDestination(noviGrad);
-      } else {
-        addDestination(noviGrad);
-      }
-    }
+  }
+
+  Future initForm() async {
+    gradResult = await _gradProvider.get();
+    print(gradResult);
+
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Destinacije'),
-      ),
-      body: Column(
+    return MasterScreenWidget(
+      // ignore: sort_child_properties_last
+      child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: _nazivController,
-                    decoration: const InputDecoration(
-                      labelText: 'Destination Name',
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a destination name.';
+          isLoading ? Container() : _buildForm(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: ElevatedButton(
+                    onPressed: () async {
+                      _formKey.currentState?.saveAndValidate();
+
+                      print(_formKey.currentState?.value);
+                      print(_formKey.currentState?.value['naziv']);
+
+                      var request = new Map.from(_formKey.currentState!.value);
+
+                      request['slika'] = _base64Image;
+
+                      print(request['slika']);
+                      
+                      try {
+                        if (widget.destinacija == null) {
+                          await _destinacijaProvider
+                              .insert(request);
+                        } else {
+                          await _destinacijaProvider.update(
+                              widget.destinacija!.id!,
+                              request);
+                        }
+                      } on Exception catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                  title: Text("Error"),
+                                  content: Text(e.toString()),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text("OK"))
+                                  ],
+                                ));
                       }
-                      return null;
                     },
-                  ),
-                  const SizedBox(height: 16.0),
-                  DropdownButton<Grad>(
-                    value: selectedGrad,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedGrad = value;
-                      });
-                    },
-                    items: grad.map((grad) {
-                      return DropdownMenuItem<Grad>(
-                        value: grad,
-                        child: Text(grad.naziv),
-                      );
-                    }).toList(),
-                  ),
-                    const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: pickImage,
-                child: const Text('Odaberite sliku'),
-              ),
-                  const SizedBox(height: 16.0),
-                  ElevatedButton(
-                    onPressed: _submitForm,
-                    child: const Text('Add Destination'),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                    child: Text("Sačuvaj")),
+              )
+            ],
+          )
         ],
       ),
+      title: this.widget.destinacija?.naziv ?? "Destinacija details",
     );
+  }
+
+  FormBuilder _buildForm() {
+    return FormBuilder(
+      key: _formKey,
+      initialValue: _initialValue,
+      child: Column(children: [
+        Row(
+          children: [
+          
+            Expanded(
+              child: FormBuilderTextField(
+                decoration: InputDecoration(labelText: "Naziv"),
+                name: "naziv",
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+                child: FormBuilderDropdown<String>(
+              name: 'gradId',
+              decoration: InputDecoration(
+                labelText: 'Grad',
+                suffix: IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () {
+                    _formKey.currentState!.fields['gradId']?.reset();
+                  },
+                ),
+                hintText: 'Select Gender',
+              ),
+              items: gradResult?.result
+                      .map((item) => DropdownMenuItem(
+                            alignment: AlignmentDirectional.center,
+                            value: item.id!.toString(),
+                            child: Text(item.naziv ?? ""),
+                          ))
+                      .toList() ??
+                  [],
+            )),
+            SizedBox(
+              width: 10,
+            ),
+          
+         
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+                child: FormBuilderField(
+              name: 'imageId',
+              builder: ((field) {
+                return InputDecorator(
+                  decoration: InputDecoration(
+                      label: Text('Odaberite sliku'),
+                      errorText: field.errorText),
+                  child: ListTile(
+                    leading: Icon(Icons.photo),
+                    title: Text("Select image"),
+                    trailing: Icon(Icons.file_upload),
+                    onTap: getImage,
+                  ),
+                );
+              }),
+            ))
+          ],
+        )
+      ]),
+    );
+  }
+  
+  File? _image;
+  String? _base64Image;
+
+Future getImage() async {
+  var result = await FilePicker.platform.pickFiles(type: FileType.image);
+
+  if (result != null && result.files.isNotEmpty) {
+    var filePath = result.files.single.path;
+    if (filePath != null) {
+      _image = File(filePath);
+      _base64Image = base64Encode(_image!.readAsBytesSync());
+    }
   }
 }
 
-class Grad {
-  final int id;
-  final String naziv;
 
-  Grad({
-    required this.id,
-    required this.naziv,
-  });
-}
-
-class Drzava {
-  final int id;
-  final String naziv;
-
-  Drzava({
-    required this.id,
-    required this.naziv,
-  });
-}
-
-class Kontinent {
-  final int id;
-  final String naziv;
-
-  Kontinent({
-    required this.id,
-    required this.naziv,
-  });
 }

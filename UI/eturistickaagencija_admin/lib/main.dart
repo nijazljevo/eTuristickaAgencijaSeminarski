@@ -7,6 +7,7 @@ import 'package:eturistickaagencija_admin/providers/karta_provider.dart';
 import 'package:eturistickaagencija_admin/providers/kontinent_provider.dart';
 import 'package:eturistickaagencija_admin/providers/korisnik_provider.dart';
 import 'package:eturistickaagencija_admin/providers/rezervacija_provider.dart';
+import 'package:eturistickaagencija_admin/providers/uloga_provider.dart';
 import 'package:eturistickaagencija_admin/screens/hotel_list_screen.dart';
 import 'package:eturistickaagencija_admin/utils/util.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => KorisnikProvider()),
     ChangeNotifierProvider(create: (_) => RezervacijaProvider()),
     ChangeNotifierProvider(create: (_) => KartaProvider()),
+    ChangeNotifierProvider(create: (_) => UlogaProvider()),
     ],
     child: const MyMaterialApp(),
   ));
